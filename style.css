@@ -17,20 +17,69 @@
 
 /* PROJECTS GRID
 -- visible after opening splash screen -- */
-.projects-grid
+.project-grid
 {
      display: grid;
-     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+     grid-template-columns: repeat(auto-fill, minmax(300px, 4fr));
+
+     /* POSITION */
+     position: absolute;
+     top: 50%;
+     bottom: 50%;
+     transform: translate(-50%, -50%);
+}
+
+.project-card
+{
+     /* HIDE CARD FOR LATER REVEAL*/
+     display: none;
+
+     border-radius: 6px;
+     margin: 10px auto;
+     width: 100px;
+     height: 150px;
 }
 
 
 /* SPLASH SCREEN*/
 .open-enter
 {
+     /* GRID */
      display: grid;
-     font-size: 10rem;
+     grid-template-columns: 1fr;
+
+     /* BORDER */
+     border-radius: 6px;
+     margin: 10px auto;
+     width: 80%;
+     padding-bottom: 10%;
+
+
+     /* POSITION */
      position: absolute;
-     border-radius: 10px;
+     top: 50%;
+     bottom: 50%;
+     left: 50%;
+     right: 50%;
+     transform: translate(-50%, -50%);
      
-     margin: 50px auto;
+     /*TEXT*/
+     font-size: 8rem;
+    
+     /* INTERACT */
+     cursor: pointer;
+
+}
+
+#enter-container
+{
+     display: none;
+}
+
+#click-enter
+{
+     border-radius: 6px;
+     margin: 10px auto;
+     width: 80%;
+     padding-bottom: 10%;
 }
