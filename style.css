@@ -3,10 +3,34 @@
      --font-family: "Alegreya Sans", sans-serif;
      --font-size: 16px;
 
-     --hue-main: 225;
+     --hue-m: 225;
+
+     /* Main Colors*/
+     --clr-nav: hsl(var(--hue-main), 100%, 10%);
 }
 
 .main-body
 {
      background-color: hsl(var(--hue-main), 100%, 10%);
+     position: relative;
+}
+
+/* PROJECTS GRID
+-- visible after opening splash screen -- */
+.projects-grid
+{
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+
+/* SPLASH SCREEN*/
+.open-enter
+{
+     display: grid;
+     font-size: 10rem;
+     position: absolute;
+     border-radius: 10px;
+     
+     margin: 50px auto;
 }
