@@ -5,13 +5,14 @@
      --font-size: 16px;
  
      /* Main Colors & Hues*/
-     --hue-m: 225;
-     --clr-nav: hsl(var(--hue-main), 100%, 10%);
+     --hue-main: 220; /* blue-ish, but you can try 0 for red, 200 for teal, etc. */
+     --clr-nav: hsl(var(--hue-main), 10%, 95%); /* very light, almost white */
+     --clr-body: hsl(var(--hue-main), 10%, 95%); /* very light, almost white */
 }
 
 body
 {
-     background-color: hsl(var(--hue-main), 100%, 10%);
+     background-color: --clr-body;
      /*position: relative;*/
 }
 
@@ -90,7 +91,7 @@ body
      width: 100%;
 
      border-radius: 15px;
-     overflow: none;
+     overflow: hidden;
 }
 
 
