@@ -19,43 +19,56 @@
 -- visible after opening splash screen -- */
 .project-grid
 {
-     display: grid;
-     grid-template-columns: repeat(auto-fill, minmax(300px, 4fr));
+     display: inline-grid;
+     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 
      /* POSITION */
      position: absolute;
-     top: 50%;
-     bottom: 50%;
-     transform: translate(-50%, -50%);
+     top: 20%;
+     width: 50%;
+     transform: translate(50%, 50%);
 }
 
 .project-card
 {
-     /* HIDE CARD FOR LATER REVEAL*/
-     display: none;
+     /* HIDE CARD FOR LATER REVEAL
+     display: none;*/
 
-     border-radius: 6px;
-     margin: 10px auto;
-     width: 100px;
-     height: 150px;
+     border-radius: 2px;
+     margin: 20px auto;
+     width: 200px;
+     aspect-ratio: 1/1;
+
+}
+
+.project-card img
+{
+     width: 100%;
 }
 
 
-/* SPLASH SCREEN*/
+/* ┌─────────────────────────────────────────────────────────┐
+   │                    SPLASH SCREEN                        │
+   │                                                         │
+   │  🚩 TODO: Come back here later to implement            │
+   │     splash screen functionality                         │
+   │                                                         │
+   └─────────────────────────────────────────────────────────┘
+
 .open-enter
 {
-     /* GRID */
+     /* GRID 
      display: grid;
      grid-template-columns: 1fr;
 
-     /* BORDER */
+     /* BORDER 
      border-radius: 6px;
      margin: 10px auto;
      width: 80%;
      padding-bottom: 10%;
 
 
-     /* POSITION */
+     /* POSITION 
      position: absolute;
      top: 50%;
      bottom: 50%;
@@ -63,17 +76,19 @@
      right: 50%;
      transform: translate(-50%, -50%);
      
-     /*TEXT*/
+     /*TEXT
      font-size: 8rem;
     
-     /* INTERACT */
+     /* INTERACT 
      cursor: pointer;
 
-}
+}*/
 
 #enter-container
 {
      display: none;
+     width: 100%;
+     height: 100%;
 }
 
 #click-enter
