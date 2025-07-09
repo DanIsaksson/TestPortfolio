@@ -237,14 +237,20 @@ body
 
 .right-profilebox-top
 {
+     display: grid;
+     grid-template-columns: 1fr;
+     align-items: start;
      width: 35%;
+     margin-left: 50px;
+
+     height: fit-content;
+     width: fit-content;
 }
 
 .my-name
 {
      font-family: var(--font-pixel);
      font-size: 30px;
-     margin-left: 10%;
 
      /* REMOVES DEFAULT MARGINS */
      margin-top: 0;
@@ -256,7 +262,6 @@ body
 {
      display: grid;
      grid-template-columns: 1fr 1fr 1fr 1fr;
-     margin-left: 10%;
      width: fit-content;
 
      /* REMOVES DEFAULT MARGINS AND SHORTENS VERTICAL SPACE */
@@ -297,7 +302,7 @@ body
      /* display: grid;
      grid-template-columns: 1fr; */
      width: fit-content;
-     margin-left: 5%;
+     margin-left: 50px;
 }
 
 #current-activity
@@ -310,10 +315,11 @@ body
      font-size: var(--font-pixel-h2);
      padding: 10px;
 
-     margin-bottom: 5px;
+     margin-top: 10px;
+     margin-left: 10px;
 }
 
-#earlier-work
+.earlier-work
 {
      /* FONT */
      font-family: var(--font-pixel);
@@ -321,23 +327,60 @@ body
      display: grid;
      grid-template-columns: 1fr 1fr 1fr;
      gap: 5px;
-     margin-top: 0%;
+     margin-top: 10px;
 }
 
-#earlier-work p
+.earlier-work li
 {
      background-color:hsl(261, 70%, 78%);
      border-radius: 5px;
      padding-left: 10px;
      padding-top: 5px;
      padding-bottom: 5px;
+     list-style: none;
+     margin-left: -25px;
+     gap: 10px;
+}
+
+.h2-activity
+{
+          /* TEXT POSITION AND STYLE */
+          font-family: var(--font-pixel);
+          font-size: var(--font-pixel-h2);
+          margin-bottom: 0px;
+          margin-left: 15px;
 }
 
 .general-information
 {
+     width: fit-content;
+     margin-left: 5%;
+     background-color:hsl(261, 70%, 78%);
+}
+
+.h2-general
+{
+     padding: 10px;
+     /* TEXT POSITION AND STYLE */
+     font-family: var(--font-pixel);
+     font-size: var(--font-pixel-h2);
+     margin-bottom: 0px;
+     margin-left: 60px;
 
 }
 
+.general-information 
+{
+
+border-radius: 5px;
+
+/* TEXT POSITION AND STYLE */
+font-family: var(--font-pixel);
+font-size: var(--font-pixel-h2);
+padding: 10px;
+
+margin-top: 10px;
+margin-left: 70px;
 /* 
    ┌─────────────────────────────────────────────────────────┐
    │             CODE FOR ENTER SPLASH SCREEN                │
