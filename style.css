@@ -42,9 +42,7 @@ body
 {
      border-bottom-style: solid;
      border-color:rgb(196, 164, 255);
-     font-size: auto;
-
-     /* POSITION */
+     font-size: inherit; /* or e.g. 1rem */     /* POSITION */
      padding-top: 15px;
 
      /* TEXT */
@@ -168,19 +166,17 @@ body
    │                                                         │
    └─────────────────────────────────────────────────────────┘    */
 
-.about-container
+.about-container /* CONTAINS .left-profilebox and .profile-photo*/
 {
      /* LAYOUT OF INTERNAL ITEMS */
      display: grid;
-     grid-template-columns: 2fr 4fr;
-     width: 600px;
-
-     /* TEXT */
+     grid-template-columns: 1fr 4fr;
+     width: 80%;
 
      /* POSITION */
      position: relative;
-     top: 65px;
-     left: 10%;
+     margin-top: 65px;
+     margin-left: 10%;
 
 }
 
@@ -189,14 +185,14 @@ body
      font-family: var(--font-pixel);
      font-size: 30px;
      color: black;
-     width: 100%;
+     width: 90%;
      height: 100%;
      align-items: center;
 }
 
 .profile-photo
 {
-     aspect-ratio:calc(1/1);
+     aspect-ratio:1/1;
      overflow: hidden;
      /* FRAME STYLING */
      border-radius: 30%;
@@ -223,8 +219,60 @@ body
      border-top-color: hsl(261, 70%, 78%);
 }
 
+/* 
+   ┌─────────────────────────────────────────────────────────┐
+   │             CODE FOR MAIN ABOUT SECTION                 │
+   │                                                         │
+   └─────────────────────────────────────────────────────────┘ 
+*/
 
+.right-profilebox
+{
+     /* GRID RULES */
+     display: grid;
+     grid-template-columns: 1fr;
+     align-items: start;
+     height: fit-content;
+}
 
+.right-profilebox-top
+{
+     width: 35%;
+}
+
+.my-name
+{
+     font-family: var(--font-pixel);
+     font-size: 30px;
+     margin-left: 10%;
+
+     /* REMOVES DEFAULT MARGINS */
+     margin-top: 0;
+     margin-bottom: 5px;
+     padding-bottom: 0px;
+}
+
+.list-skills
+{
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr 1fr;
+     margin-left: 10%;
+     width: fit-content;
+
+     /* REMOVES DEFAULT MARGINS AND SHORTENS VERTICAL SPACE */
+     margin-top: -20px;
+}
+
+.skill-item
+{
+     background-color: hsl(261, 70%, 78%);
+     margin: 2px;
+     padding: 2px;
+     border-radius: 10%;
+     text-align: center;
+     font-family: var(--font-pixel);
+     font-size: 18px;
+}
 
 /* 
    ┌─────────────────────────────────────────────────────────┐
