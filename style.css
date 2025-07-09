@@ -2,7 +2,7 @@
 :root {
      --font-regular: "Alegreya Sans", sans-serif;
      --font-pixel: 'Pixelify Sans', display;
-     --font-size: 16px;
+     --font-pixel-h2: 24px;
  
      /* Main Colors & Hues*/
      --hue-main: 220; /* blue-ish, but you can try 0 for red, 200 for teal, etc. */
@@ -260,7 +260,6 @@ body
      width: fit-content;
 
      /* REMOVES DEFAULT MARGINS AND SHORTENS VERTICAL SPACE */
-     margin-top: -20px;
 }
 
 .skill-item
@@ -272,6 +271,71 @@ body
      text-align: center;
      font-family: var(--font-pixel);
      font-size: 18px;
+}
+
+/* 
+   ┌─────────────────────────────────────────────────────────┐
+   │           WORK-IN-PROGRESS: ABOUT SECTION MIDDLE        │
+   │  This area is currently being developed and styled.     │
+   │  Includes: .right-profilebox-main, .activity-overview,  │
+   │  #current-activity, #earlier-work, .general-information │
+   └─────────────────────────────────────────────────────────┘
+*/
+.right-profilebox-main
+{
+     margin-top: 5%;
+     
+     display: grid;
+     grid-template-columns: 1fr;
+     align-items: start;
+     height: fit-content;
+     width: fit-content;
+}
+
+.activity-overview
+{
+     /* display: grid;
+     grid-template-columns: 1fr; */
+     width: fit-content;
+     margin-left: 5%;
+}
+
+#current-activity
+{
+     background-color:hsl(261, 70%, 78%);
+     border-radius: 5px;
+     
+     /* TEXT POSITION AND STYLE */
+     font-family: var(--font-pixel);
+     font-size: var(--font-pixel-h2);
+     padding: 10px;
+
+     margin-bottom: 5px;
+}
+
+#earlier-work
+{
+     /* FONT */
+     font-family: var(--font-pixel);
+
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr;
+     gap: 5px;
+     margin-top: 0%;
+}
+
+#earlier-work p
+{
+     background-color:hsl(261, 70%, 78%);
+     border-radius: 5px;
+     padding-left: 10px;
+     padding-top: 5px;
+     padding-bottom: 5px;
+}
+
+.general-information
+{
+
 }
 
 /* 
