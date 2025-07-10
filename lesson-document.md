@@ -20,6 +20,15 @@ Before we dive into code, let’s celebrate the wins and outline what you’ll m
 
 > Keep these themes in mind; every section of this lesson points back to them.
 
+### 1.3 Crafting a Pragmatic Learning Mindset *(sidebar)*
+*“One of the best ways to accelerate your growth,”* write Hunt & Thomas, *“is to learn deliberately.”*  
+As you read this guide, pause and:
+1. **Predict** the outcome of each code change before trying it.  
+2. **Observe** what actually happens.  
+3. **Reflect** on the difference.
+
+Jen Simmons calls this *“pushing the browser ’til it squeaks.”* Break things—then fix them. That feedback loop is worth a week of passive reading.
+
 ---
 
 ## 2 The HTML Blueprint — Structure, Semantics, Accessibility
@@ -133,6 +142,10 @@ body { background-color: var(--clr-body); }
 .dark-theme { --hue-main: 320; /* purple-pink */ }
 ```
 
+> **Jen’s Layout Insight**  
+> Think of custom properties as *design tokens*—named, reusable decisions.  
+> Give them **honest names** (`--clr-accent`, `--space-xs`) rather than `--blue1`. Your future self (or teammate) will thank you.
+
 ### 3.2 Typography Scaling with `clamp()`
 #### 3.2.1 Why `clamp()`?
 Without media queries you can size text responsively between a minimum and maximum:
@@ -143,6 +156,9 @@ Without media queries you can size text responsively between a minimum and maxim
 * **`2.5rem`** = never shrink smaller than ~40px (assuming 16px root).
 * **`6vw + 1rem`** = fluid part (6% of viewport width).
 * **`6rem`** = cap at ~96px on giant monitors.
+
+> **Pragmatic Tip – The “Goldilocks” Font**  
+> `clamp()` stops you from shipping text that is *too small* on desktops and *too large* on phones. It’s the typographic porridge that’s *just right*.
 
 #### 3.2.2 Apply to Your Heading
 ```37:41:style.css
@@ -159,6 +175,9 @@ Now the hero text scales elegantly on phones & desktops.
 | `vw/vh` | Full viewport-based effects | Use sparingly (can break mobile address bar resize). |
 
 > **Rule of thumb:** Pixels (`px`) are fine for hairline borders & shadows, but almost everything else should scale.
+
+> **Rubber-Ruler Rule (Pragmatic Programmer)**  
+> Treat layouts like *rubber rulers*: they stretch and compress. Hard-coding width in pixels is like carving your ruler from stone—looks sturdy, but snaps under pressure (read: iPhone SE).
 
 ### 3.4 CSS Grid Centering: Container *vs.* Items
 Your original issue: items centered, grid *container* stuck left. The fix was adding auto margins.
@@ -208,6 +227,9 @@ Subtle hover effects invite exploration:
 ```
 
 > **Dark satire cameo:** Users hover, card floats—*foolish mortals*, they can’t resist clicking now…
+
+> **Jen’s Design Principle – Affordance**  
+> An element should *look* interactive *before* the user touches it. Use a slight color shift or shadow on **`a.project-card`** even in its resting state so the hover transition feels like a conversation, not a jump scare.
 
 ---
 
@@ -300,6 +322,9 @@ Define `--clr-dotnet` in `:root` for easy palette tweaks.
 4. Given `grid-template-columns: repeat(auto-fill,minmax(200px,1fr));`, what happens if the viewport shrinks below 200 px?
 
 *(Answers at bottom of file – no cheating!)*
+
+> **Sharpen the Saw – Pragmatic Edition**  
+> Schedule a 30-minute “code reading” session once a week. Skim through a popular open-source project’s CSS/HTML just to observe naming, structure, and comments. You’ll absorb patterns subconsciously—like learning a language by immersion.
 
 ---
 
