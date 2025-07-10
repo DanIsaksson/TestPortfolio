@@ -1,347 +1,356 @@
-# Complete Study Guide — Building & Maintaining Your Portfolio Site  
-*A step-by-step mentor walk-through for the beginning web developer*  
+# Masterclass Review: Building a Maintainable Portfolio Site  
+*for our enthusiastic beginner web-dev*  
 
 ---
 
-## 1 High-Level Overview
-Before we dive into code, let’s celebrate the wins and outline what you’ll master by the end of this guide.
+## 1 High-Level Overview — What You Did & Where We’re Heading
+You’ve shipped a **four-page** portfolio with navigation, custom fonts, Grid layouts, and cheeky copy. ✨  
+That alone deserves a polite round of applause (and maybe a coffee-powered fist-bump).
 
-### 1.1 What You Already Achieved
-* Created **four functional pages** (`index`, `projects`, `about`, `cv`).
-* Implemented **navigation**, **custom fonts**, and **CSS Grid** for layout.
-* Added fun, personal copy that shows personality. 🎉
+**Things done well**
 
-### 1.2 Where We’ll Level Up
-| Theme | Why It Matters |
-|-------|---------------|
-| **Consistency & Scalability** | A tidy codebase lets you add pages or features without pain. |
-| **Semantic HTML & Accessibility** | Helps search engines *and* assistive tech understand your content. |
-| **Responsive & Modern CSS** | Ensures the site looks great on any screen size. |
+1. Semantic ingredients: `<nav>`, `<section>`, heading tags, `alt` attributes.  
+2. Exploration of CSS Grid and custom properties (`:root` variables).
 
-> Keep these themes in mind; every section of this lesson points back to them.
+**Biggest growth themes**
 
-### 1.3 Crafting a Pragmatic Learning Mindset *(sidebar)*
-*“One of the best ways to accelerate your growth,”* write Hunt & Thomas, *“is to learn deliberately.”*  
-As you read this guide, pause and:
-1. **Predict** the outcome of each code change before trying it.  
-2. **Observe** what actually happens.  
-3. **Reflect** on the difference.
+* Consistency & scalability (variables, re-usable components, unit choices).  
+* Semantic precision & accessibility (proper hierarchy, keyboard paths).  
+* Responsive thinking vs. fixed pixels (rem units, clamp(), media queries).  
 
-Jen Simmons calls this *“pushing the browser ’til it squeaks.”* Break things—then fix them. That feedback loop is worth a week of passive reading.
+Keep those three themes in mind; they’ll echo through every section below.
 
 ---
 
-## 2 The HTML Blueprint — Structure, Semantics, Accessibility
-HTML is the **skeleton**; CSS merely dresses it. A well-structured skeleton is lighter, stronger, and easier to move.
+## 2 A. The HTML Blueprint — Structure, Semantics, Accessibility
+We start with the bones of the site. A beautiful paint job can’t fix a crooked house.
 
-### 2.1 Document Skeleton & `<head>` Hygiene
-_This section originally covered extracting a shared `<head>` partial with a server-side include or static-site generator. Because our current studies are **purely static** (no backend/build pipeline yet), keep the duplicated `<head>` markup for now. Come back to this idea when you learn templating._
+### A-1 Document Skeleton & `<head>` Hygiene
+Your pages **duplicate** the entire `<head>` boilerplate. That’s harmless in a tiny repo, fatal in a big one.
+
+```1:9:index.html
+<link rel="stylesheet" href="style.css">
+<!-- Bunny Fonts -->
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=alegreya-sans:400,400i,800,800i|pixelify-sans:400,700" rel="stylesheet" />
+```
+
+**Problem**
+
+* Every file repeats the same `<link>` tags → hard to maintain, slows the first render (the browser re-parses duplicates).
+
+**Better**
+
+1. **Single source of truth** – use a build tool / server-side include (`partials/head.html`).  
+2. **Preload not repeat** – boost font loading:
+
+```html
+<!-- head.html -->
+<link rel="preload" href="https://fonts.bunny.net/alegreya-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/main.css">
+```
+
+> ***Humor beat*** – Think of `<head>` like the backstage crew. You only need one calm stage manager, not four clones sprinting in circles yelling “Places, everybody!”
+---
+
+### A-2 Semantic Grouping & Landmarks
+Each page replicates the same `<nav>` markup. That’s workable today; tomorrow it’s technical debt.
+
+```22:34:about.html
+<nav> … four identical <li> … </nav>
+```
+
+**Reflective question**  What happens when you add one new page? *Four* separate edits.  
+
+**Solution path**
+
+* Use a templating layer (Nunjucks, Handlebars, PHP includes, React components—pick your poison).  
+* Extract a shared `nav.html` partial.
+
+```html
+<!-- nav.html -->
+<nav>
+    <ul class="nav-menu">
+        <li><a href="/">Home</a></li>
+        …
+    </ul>
+</nav>
+```
 
 ---
 
-### 2.2 Semantic Grouping & Landmarks
-_This previously recommended centralising your `<nav>` into a single partial. Without a backend or build tool, copy-pasting the menu across pages is acceptable—just make sure every link stays in sync._
+### A-3 `<section>` vs `<article>` — Recap & Application
+You already asked this in chat, so let’s solidify.
 
----
+* **`<article>`** = self-contained. If I copy-paste it to another site, it still makes sense.  
+* **`<section>`** = thematic group inside something larger.
 
-### 2.3 `<section>` vs `<article>` — Which Tag, When?
-Think of a **newspaper**:
-* **Articles** = individual stories you could cut out and take home.
-* **Sections** = categories like *Sports* or *Lifestyle* that group articles.
+**Your code**
 
-Your portfolio **project cards** can stand alone (like tiny blog posts), so wrap each in `<article>` for maximum meaning:
+```60:75:projects.html
+<a class="project-card" …>
+    <img …>
+    <h2>Assignment 1</h2>
+    <p>Short description.</p>
+</a>
+```
+
+A project card is standalone content. Wrapping each `project-card` anchor in an `<article>` would be semantically perfect:
 
 ```html
 <article class="project-card">
   <a href="https://github.com/DanIsaksson/assignment-1">
-    <img src="images/assignment-1-card.jpg" alt="Assignment 1 thumbnail" />
-    <h2 class="project-title">Assignment 1</h2>
-    <p class="project-blurb">Command-line tool built in C#.</p>
+     …
   </a>
 </article>
 ```
 
-Why this helps:
-* **Search engines** can surface each project individually.
-* **Screen readers** announce *Article, Assignment 1* giving clear context.
-
 ---
 
-### 2.4 Path Correctness — Say “No” to Backslashes
-Backslashes in URLs confuse non-Windows servers.
+### A-4 Link & Image Paths (Back-slash Bug)
+Windows uses backslashes; URLs **never** should.
 
 ```65:66:projects.html
 <img src="images\freeplay-checkpoint-plugin.jpg">
 ```
 
-Fix:
+On UNIX hosting this image = *404 party*.
 
 ```html
-<img src="images/freeplay-checkpoint-plugin.jpg" alt="Rocket League checkpoint plugin screenshot" />
+<img src="images/freeplay-checkpoint-plugin.jpg">
 ```
 
-Also ensure your **`alt`** text is descriptive; it’s read by screen-reader users and displayed if the image fails to load.
-
-> *Klingon road signs analogy*: People will get lost. Stick to forward slashes.
-
+> ***Humor beat*** – Backslashes in URLs are like Swedish road signs written in Klingon. People get very lost, very fast.
 ---
 
-### 2.5 Proper List & Link Nesting
-In `cv.html` you’ve nailed:
+### A-5 Lists, Anchors & Contact Details
+Structure found in `cv.html`:
 
 ```23:29:cv.html
 <ul class="contact-details">
   <li><a href="mailto:danisacsson@gmail.com">danisacsson@gmail.com</a></li>
-</ul>
 ```
 
-Rule of thumb:
-* **`<li>` outside `<a>`** — The list item *contains* the link, not vice-versa. Nice work here!
+Good! `<li>` outside `<a>` is the correct order (earlier you had the inverse in drafts). Keep verifying *semantics-first*.
 
 ---
 
-### 2.6 Accessibility Essentials
-1. **One `<h1>` per page.** Think chapter title. Currently some pages jump straight to `<h2>`—easy fix.
-2. **Skip Link**
-   ```html
-   <a class="skip-link" href="#main">Skip to content</a>
-   ```
-   Add visually hidden styles and reveal on keyboard focus so screen-reader and keyboard users can bypass the sidebar nav.
-3. **Color Contrast.** Use [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) to ensure lavender backgrounds vs. white text are readable (ratio ≥ 4.5:1).
+### A-6 Accessibility Touches
+**Checklist**
+
+* Each page needs **exactly one `<h1>`** (some pages skip it).  
+* The nav menu is visually fixed left; give keyboard users a *skip link*.  
+* Ensure color contrast ≥ 4.5:1 (the lavender on white may not cut it).  
 
 ---
 
-## 3 CSS Paint & Polish — Variables, Layout, Units
-Time to turn raw bones into responsive, stylish muscle.
+## 3 B. The CSS Paint & Polish — Variables, Layout, Units
+Time to upgrade that paintbrush.
 
-### 3.1 Custom Properties (CSS Variables)
-You’ve declared variables in `:root`—great start!
+### B-1 Custom Properties Basics (and a small bug)
+You smartly declared variables:
 
 ```1:14:style.css
 :root {
   --hue-main: 220;
-  --clr-body: hsl(var(--hue-main),10%,95%);
+  --clr-body: hsl(var(--hue-main), 10%, 95%);
 }
 ```
 
-But then accidentally skipped the `var()` wrapper:
+But then:
 
 ```16:20:style.css
-body { background-color: --clr-body; /* ❌ */ }
+body {
+    background-color: --clr-body;   /* ❌  var() missing */
+}
 ```
 
-**Correct Usage**
+**Fix**
 
 ```css
 body { background-color: var(--clr-body); }
 ```
 
-> **How variables cascade** — If you redefine `--hue-main` inside a `.dark-theme` class, every variable referencing it updates automatically.
+Why `var()`? Think of it as a **bartender**; the CSS property says “gimme *var--clr-body*, the usual.”
 
-```css
-.dark-theme { --hue-main: 320; /* purple-pink */ }
-```
+---
 
-> **Jen’s Layout Insight**  
-> Think of custom properties as *design tokens*—named, reusable decisions.  
-> Give them **honest names** (`--clr-accent`, `--space-xs`) rather than `--blue1`. Your future self (or teammate) will thank you.
+### B-2 Typography Scale & `clamp()`
+You nailed `--nav-font-size: clamp(16px, 3vw, 22px)` – responsive without media queries.
 
-### 3.2 Typography Scaling with `clamp()`
-#### 3.2.1 Why `clamp()`?
-Without media queries you can size text responsively between a minimum and maximum:
+Now tame the wild pixel beasts:
 
-```css
-:root { --fs-hero: clamp(2.5rem, 6vw + 1rem, 6rem); }
-```
-* **`2.5rem`** = never shrink smaller than ~40px (assuming 16px root).
-* **`6vw + 1rem`** = fluid part (6% of viewport width).
-* **`6rem`** = cap at ~96px on giant monitors.
-
-> **Pragmatic Tip – The “Goldilocks” Font**  
-> `clamp()` stops you from shipping text that is *too small* on desktops and *too large* on phones. It’s the typographic porridge that’s *just right*.
-
-#### 3.2.2 Apply to Your Heading
 ```37:41:style.css
+font-size: 100px;   /* inside .general-container h2 */
+```
+
+**Refactor path**
+
+```css
+:root {
+  --fs-hero: clamp(2.5rem, 6vw + 1rem, 6rem);
+}
 .general-container h2 { font-size: var(--fs-hero); }
 ```
-Now the hero text scales elegantly on phones & desktops.
 
-### 3.3 Choosing the Right Units
-| Unit | Best For | Why |
-|------|----------|-----|
-| `rem` | Font sizes, padding, margins | Respects user’s browser zoom / base font setting. |
-| `%`   | Width/height of **child** relative to **parent** | Useful when parent size is known. |
-| `fr`  | CSS Grid track sizes | Divides remaining space cleanly. |
-| `vw/vh` | Full viewport-based effects | Use sparingly (can break mobile address bar resize). |
+---
 
-> **Rule of thumb:** Pixels (`px`) are fine for hairline borders & shadows, but almost everything else should scale.
+### B-3 Consistent Units
+Example of mixed pixels & percentages:
 
-> **Rubber-Ruler Rule (Pragmatic Programmer)**  
-> Treat layouts like *rubber rulers*: they stretch and compress. Hard-coding width in pixels is like carving your ruler from stone—looks sturdy, but snaps under pressure (read: iPhone SE).
-
-### 3.4 CSS Grid Centering: Container *vs.* Items
-Your original issue: items centered, grid *container* stuck left. The fix was adding auto margins.
-
-```css
-.project-grid {
-  margin-left: auto;
-  margin-right: auto; /* centers the container */
+```20:27:style.css
+.nav-menu {
+  width: 8%;        /* percent of viewport width */
+  height: 30%;      /* percent of viewport height? no, parent height */
 }
 ```
 
-If you also want items themselves centered within each grid cell:
+Percent **of what**? Keep mental models simple:
+
+* Use **rem** for text/inset spacing.  
+* Use **%** or **fr** for grid tracks.  
+* Use **clamp()** for responsive extremes.
+
+**Exercise** Convert that `height:30%` into a max-height responsive rule:
 
 ```css
-.project-grid { place-items: center; }
+.nav-menu {
+  height: clamp(200px, 30vh, 400px);
+}
 ```
 
-### 3.5 DRY Selectors & Utility Classes
-Repeating borders across multiple classes? Bundle them.
+---
+
+### B-4 Layout with CSS Grid — Centering & Duplication
+You fixed centering with `margin-left:auto; margin-right:auto;`.
+
+**Why the duplicate `width`?**
+
+```73:83:style.css
+.general-container {
+  width: 50%;
+  …
+  width: 90%;   /* second declaration overrides first */
+}
+```
+
+Remove the first. DRY code prevents 3 a.m. bugs.
+
+---
+
+### B-5 DRY & Grouped Selectors
+`.project-card`, `.profile-photo`, `.profile-photo-cv` all repeat identical border radii & colors. Extract a utility:
 
 ```css
-/* Utility */
-.has-pixel-border {
-  border: 2px solid hsl(var(--hue-main),100%,10%);
+.rounded-pixel {
   border-radius: 15px;
+  border: 2px solid hsl(var(--hue-main),100%,10%);
 }
-
-/* Apply */
 .project-card,
 .profile-photo img,
-.profile-photo-cv img { @extend .has-pixel-border; /* in SASS */ }
+.profile-photo-cv img {
+    /* apply the utility */
+    border-radius: var(--rounded-radius,15px);
+    border: 2px solid hsl(var(--hue-main),100%,10%);
+}
 ```
 
-If you’re sticking to vanilla CSS, group selectors as shown above. Later you can migrate to a utility-first framework like Tailwind.
+---
 
-### 3.6 Micro-Interactions
-Subtle hover effects invite exploration:
+### B-6 Visual Polish & Micro-Interactions
+Your `contact-details li:hover` swap color is a strong start.
+
+Upgrade project cards:
 
 ```css
 .project-card {
   transition: transform .25s ease, box-shadow .25s ease;
 }
 .project-card:hover {
-  transform: translateY(-6px) rotateZ(-0.5deg);
-  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+  transform: translateY(-6px);
+  box-shadow: 0 6px 15px rgba(0,0,0,.15);
 }
 ```
 
-> **Dark satire cameo:** Users hover, card floats—*foolish mortals*, they can’t resist clicking now…
-
-> **Jen’s Design Principle – Affordance**  
-> An element should *look* interactive *before* the user touches it. Use a slight color shift or shadow on **`a.project-card`** even in its resting state so the hover transition feels like a conversation, not a jump scare.
-
+> ***Dark-satire aside*** – Lull users into clicking: “Come, dear visitor, hover over my card… nothing bad will happen…” (ominous thunder).
 ---
 
-## 4 Grand Synthesis — Bringing HTML + CSS Together
-### 4.1 Project Architecture for Growth
-* **Folder-by-feature**<br>Keep HTML, CSS (and later JS) for a component together:
+## 4 C. The Grand Synthesis — Making HTML & CSS Dance Together
+### 1 Project Architecture
+Currently each HTML page imports `style.css`. That’s fine, but:
+
+* Consider a **component folder** approach:  
   ```
-  components/
-    nav/
-      nav.html
-      nav.css
-    project-card/
-      card.html
+  /components
+      nav.css & .html
       card.css
+  main.css (imports them)
   ```
-  Then roll everything up via build process (Vite, Parcel, etc.).
+* Future frameworks (React/Vue/Svelte) encourage single-source components — you’re already half-way there.
 
-### 4.2 Scalability Checklist
-1. **CSS Reset** – Use *Normalize.css* or a minimal reset to kill browser quirks.
-2. **Naming Convention** – Try BEM:
-   ```html
-   <article class="project-card project-card--featured">
-     <h2 class="project-card__title">…</h2>
-   </article>
-   ```
-3. **Comment your code** — Future-you will be grateful.
+### 2 Scalability Checklist
+* **Global reset** or **normalize.css** to zero out inconsistent defaults.  
+* **Naming convention** – BEM (`project-card__title`) or utility (Tailwind).  
 
-### 4.3 Responsive Workflow (Mobile-First)
-1. Start with a single-column layout that works on phones.
-2. Add media queries *upward*.
+### 3 Responsive Workflow
+Mobile-first means:
 
 ```css
-/* Base — mobile */
-.project-grid { grid-template-columns: 1fr; }
-
-@media (min-width: 600px) {
-  .project-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.project-grid {
+    grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+}
+@media (min-width:768px) {
+    .project-grid { grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); }
 }
 ```
 
-### 4.4 Move Inline Styles to CSS
-Inline styles override everything else, clutter HTML, and block efficient theming. Extract them:
+### 4 Maintainability — Kill Inline Styles
+```66:69:index.html
+<span style="color:#4CAF50;">.NET</span>
+```
+
+Move to CSS:
+
+```css
+.skill-dotnet { color: var(--clr-dotnet); }
+```
+
+And define `--clr-dotnet` inside `:root`.
+
+### 5 Performance Sprinkles
+You already use `preconnect`; add:
 
 ```html
-<!-- Before -->
-<span style="color:#4CAF50;">.NET</span>
-
-<!-- After -->
-<span class="tag tag--dotnet">.NET</span>
+<link rel="preload" href="/images/hero.jpg" as="image">
 ```
 
-```css
-.tag { font-weight: 600; border-radius: 4px; padding: 2px 4px; }
-.tag--dotnet { color: var(--clr-dotnet); }
-```
-
-Define `--clr-dotnet` in `:root` for easy palette tweaks.
-
-### 4.5 Performance Sprinkles
-| Technique | 1-Liner Explanation |
-|-----------|---------------------|
-| **`preconnect`** | Opens a network connection early to your font/CDN host. |
-| **`preload`** | Tells the browser “download this big image now, we’ll need it soon.” |
-| **Image Formats** | WebP/AVIF shrink assets ~50% compared to JPEG. |
+and compress images to WebP for a 40-70 % savings.
 
 ---
 
-## 5 Practice & Next Steps
-### 5.1 Immediate Fixes (≈ 30 min)
-* Correct `var(--clr-body)` typo.
-* Swap backslash image paths.
-* Remove duplicate widths in `.general-container`.
+## 5 D. Final Review & Next Steps
+### Key Takeaways
+* Semantics first (`<article>` vs `<section>`, one `<h1>`).  
+* Variable-driven design (`var()`, `clamp()`).  
+* DRY components (shared nav, utility classes).  
+* Accessibility & responsive concerns early, not bolted on.
 
-### 5.2 Short-Term Enhancements (1-2 hrs)
-* Implement global typography scale with `clamp()` variables.
-* Add *skip link* + verify correct `<h1>` hierarchy.
+### Action Plan
+| Timeframe | Task |
+|-----------|------|
+| **Today** | Fix `var(--clr-body)` bug, remove duplicate widths, correct image paths |
+| **Tomorrow** | Extract nav into partial, create `:root` typography scale |
+| **This week** | Convert fixed pixel dimensions to `rem`/`clamp`, add hover polish, audit contrast |
+| **Stretch** | Implement the JavaScript splash screen, run Lighthouse & axe accessibility scans |
 
-### 5.3 Stretch Goals
-* Build the “[Press Enter]” splash screen with minimal JS.
-* Run Lighthouse + axe-core audits; aim for 90+ accessibility score.
-* Integrate a build process (Eleventy or Vite) to bundle & minify assets.
+### Resources
+* MDN: CSS Grid guide.  
+* Kevin Powell YouTube on `clamp()`.  
+* WebAIM Contrast Checker.
 
-### 5.4 Self-Check Quiz
-1. **Explain** the difference between `<section>` and `<article>` in one sentence each.
-2. Convert this pixel rule into `clamp()`:
-   ```css
-   .hero { font-size: 72px; }
-   ```
-3. Name two benefits of moving inline styles to a stylesheet.
-4. Given `grid-template-columns: repeat(auto-fill,minmax(200px,1fr));`, what happens if the viewport shrinks below 200 px?
+### Quiz Ideas
+1. Rewrite `.project-card` with variables in `< 8` lines.  
+2. Identify three spots where `<article>` beats `<section>`.
 
-*(Answers at bottom of file – no cheating!)*
-
-> **Sharpen the Saw – Pragmatic Edition**  
-> Schedule a 30-minute “code reading” session once a week. Skim through a popular open-source project’s CSS/HTML just to observe naming, structure, and comments. You’ll absorb patterns subconsciously—like learning a language by immersion.
-
----
-
-## 6 Reference Library
-* **MDN Web Docs** – Definitive HTML & CSS info.
-* **Kevin Powell YouTube** – Digestible CSS & responsive design tutorials.
-* **WebAIM Contrast Checker** – Quick color-contrast validation.
-* **CSS-Tricks Almanac** – “What does this property do again?”
-
-> ***Final Humor*** — The mythical “200-year-old developer” didn’t actually live two centuries; he just spent 199 years refactoring duplicated `<head>` tags. Be smarter: refactor today, sleep tonight. ☕️
-
----
-
-### Quiz Answers
-1. *`<article>` is standalone; `<section>` groups related parts of something bigger.*
-2. Example: `font-size: clamp(2rem, 8vw + 1rem, 4.5rem);` (Any correct clamp range earns full credit.)
-3. *Cleaner HTML; easier theming; better caching; smaller diff noise.*
-4. *Columns collapse to one per row; each project card becomes full-width.*
-
-Happy coding, and see you at the next refactor!
+> ***Humor outro*** – Remember that *legendary 200-year-old developer* quote? The secret to such longevity is simple: keep your CSS DRY, your semantics sharp, and your coffee supply infinite. Refactor early, refactor often—because debugging at 3 a.m. without variables is the real horror story.  
+Happy coding!
