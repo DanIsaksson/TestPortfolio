@@ -243,7 +243,6 @@ body
 
 .profile-photo img
 {
-
      width: 100%;
      height: 100%;
 }
@@ -472,36 +471,38 @@ body
 .contact-details
 {
      font-family: var(--font-pixel);
-     font-size: 18px;
+     font-size: 24px;
      display: grid;
      grid-template-columns: 1fr 1fr;
      width: fit-content;
      gap: 20px;
 }
 
-.contact-details a
+.contact-details li
 {
      gap: 1px;
      border-color: hsl(261, 70%, 78%);
      border-style: solid;
      border-radius: 20px;
-     padding-left: 10px;
+     padding-left: 5px;
+     padding-top: 5px;
      align-items: center;
      cursor: pointer;
+     list-style: none;
 
      /* Add transition for smooth hover effect */
      transition: all 0.3s ease;
 }
 
 /* Hover effect - swap colors */
-.contact-details a:hover
+.contact-details li:hover
 {
      background-color: hsl(261, 70%, 78%);
      color: white;
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
 
-.contact-details a
+.contact-details li
 {
      display: block;
      width: 100%;
@@ -515,7 +516,7 @@ body
      display: grid;
      grid-template-columns: 1fr;
      margin-left: 10%;
-     border-radius: 20%;
+     border-radius: 20px;
      width: 100%;
 }
 
@@ -575,6 +576,8 @@ body
 
 .cv-skills
 {
+     /* FONT STUFF */
+     font-size: 20px;
      /* BORDER FIXES */
      border-style: solid;
      border-color: hsl(261, 70%, 78%);
@@ -587,12 +590,15 @@ body
 
 .cv-knowledge
 {
+     /* FONT STUFF */
+     font-size: 20px;
+
      /* BORDER FIXES */
      border-style: solid;
      border-color: hsl(261, 70%, 78%);
      border-bottom-width: 0;
      border-top-width: 0;
-     border-left-width: 10px; /* No left border - connects to skills */
+     border-left-width: 10px; 
      border-right-width: 0;
 }
 
@@ -622,7 +628,8 @@ body
 .dev-history-items dd
 {
      font-size: 18px;
-     margin-bottom: 10px;
+     margin-bottom: 20px;
+     margin-left: 0px;
 }
 
 /*     FOR SPLASH SCREEN
