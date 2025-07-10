@@ -26,78 +26,12 @@ Before we dive into code, let’s celebrate the wins and outline what you’ll m
 HTML is the **skeleton**; CSS merely dresses it. A well-structured skeleton is lighter, stronger, and easier to move.
 
 ### 2.1 Document Skeleton & `<head>` Hygiene
-#### 2.1.1 Problem: Duplicate `<head>` Code
-Each HTML file repeats identical links to fonts and the main stylesheet:
-
-```1:9:index.html
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.bunny.net">
-<link href="https://fonts.bunny.net/css?family=alegreya-sans:400,400i,800,800i|pixelify-sans:400,700" rel="stylesheet" />
-```
-
-While nothing *breaks*, duplication causes:
-* **Maintenance drag** – Update one link? Edit four files.
-* **Performance hiccups** – Browsers re-parse the same font hints.
-
-#### 2.1.2 Solution: One Source of Truth
-If you deploy on any server-side platform (PHP, Node/Express, Django, etc.), you can extract a partial:
-
-```html
-<!-- /partials/head.html -->
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{{ pageTitle }}</title>
-
-  <!-- Performance boost: preload font → then stylesheet -->
-  <link rel="preload" href="https://fonts.bunny.net/alegreya-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/css/main.css" />
-</head>
-```
-
-Then include that partial in every page template. *One edit, site-wide change.*
-
-> ***Humor moment*** — Imagine four stage managers all shouting directions at the same time. That’s your duplicated `<head>`. Fire three, give one a coffee, and the show runs smoothly.
+_This section originally covered extracting a shared `<head>` partial with a server-side include or static-site generator. Because our current studies are **purely static** (no backend/build pipeline yet), keep the duplicated `<head>` markup for now. Come back to this idea when you learn templating._
 
 ---
 
 ### 2.2 Semantic Grouping & Landmarks
-#### 2.2.1 The Duplicate `<nav>`
-Every page currently has:
-
-```22:34:about.html
-<nav>
-  <ul class="nav-menu">
-    <li><a href="/index.html">Home</a></li>
-    …
-  </ul>
-</nav>
-```
-
-That’s *okay* for four pages—but imagine twenty.
-
-#### 2.2.2 Why DRY Matters
-* Less copy-paste → fewer bugs.
-* Global style changes become trivial.
-
-#### 2.2.3 Quick Fix Paths
-1. **Server-Side Include** (Apache/Nginx can include raw HTML).
-2. **Static-site Generators** (Eleventy, Astro) — great practice.
-3. **JS Component** (if/when you add JavaScript) — `fetch('/nav.html').then(...)`.
-
-```html
-<!-- nav.html (stand-alone) -->
-<nav aria-label="Main">
-  <ul class="nav-menu">
-    <li><a href="/">Home</a></li>
-    <li><a href="/projects.html">Projects</a></li>
-    <li><a href="/about.html">About</a></li>
-    <li><a href="/cv.html">CV</a></li>
-  </ul>
-</nav>
-```
-
-Include this file wherever you like and style once in `style.css`.
+_This previously recommended centralising your `<nav>` into a single partial. Without a backend or build tool, copy-pasting the menu across pages is acceptable—just make sure every link stays in sync._
 
 ---
 
@@ -348,7 +282,6 @@ Define `--clr-dotnet` in `:root` for easy palette tweaks.
 * Remove duplicate widths in `.general-container`.
 
 ### 5.2 Short-Term Enhancements (1-2 hrs)
-* Extract shared `nav.html` + include everywhere.
 * Implement global typography scale with `clamp()` variables.
 * Add *skip link* + verify correct `<h1>` hierarchy.
 
