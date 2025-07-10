@@ -186,35 +186,6 @@ body
    │                                                         │
    └─────────────────────────────────────────────────────────┘
 */
-/*
-.open-enter
-{
-      /*GRID*
-     display: grid;
-     grid-template-columns: 1fr;
-
-      /* BORDER*
-     border-radius: 6px;
-     margin: 10px auto;
-     width: 80%;
-     padding-bottom: 10%;
-
-      /* POSITION*  
-     position: absolute;
-     top: 50%;
-     bottom: 50%;
-     left: 50%;
-     right: 50%;
-     transform: translate(-50%, -50%);
-     
-     /* TEXT*
-     font-size: 8rem;
-    
-     /* INTERACT*  
-     cursor: pointer;
-
-}
-*/
      
 /*
    ┌─────────────────────────────────────────────────────────┐
@@ -344,10 +315,11 @@ body
 
 /* 
    ┌─────────────────────────────────────────────────────────┐
-   │           WORK-IN-PROGRESS: ABOUT SECTION MIDDLE        │
-   │  This area is currently being developed and styled.     │
-   │  Includes: .right-profilebox-main, .activity-overview,  │
-   │  #current-activity, #earlier-work, .general-information │
+   │      ABOUT SECTION MIDDLE — MAIN STYLES COMPLETE        │
+   │  This area (.right-profilebox-main, .activity-overview, │
+   │  #current-activity, .earlier-work, .general-information)│
+   │  is fully styled and functional. Further changes will be │
+   │  minor adjustments or fine-tuning as needed.            │
    └─────────────────────────────────────────────────────────┘
 */
 .right-profilebox-main
@@ -444,9 +416,105 @@ body
 
 /* 
    ┌─────────────────────────────────────────────────────────┐
-   │             CODE FOR ENTER SPLASH SCREEN                │
+   │                        CODE FOR CV                      │
    │                                                         │
    └─────────────────────────────────────────────────────────┘    */
+.cv-header
+{
+     display: grid;
+     grid-template-columns: 1fr 4fr;
+
+     position: relative;
+
+     margin-left: 10%;
+     margin-top: 65px;
+}
+
+.cv-header h1
+{
+     font-family: var(--font-pixel);
+     margin-left: 20px;
+     border-style: solid;
+     width: fit-content;
+     border-radius: 10px;
+     border-color: hsl(261, 70%, 78%);
+     padding: 5px;
+
+}
+
+.profile-photo-cv
+{
+     aspect-ratio:1/1;
+     overflow: hidden;
+     /* FRAME STYLING */
+     border-radius: 30%;
+     border-style: solid;
+     border-width: 10px;
+     border-color: hsl(261, 70%, 78%);
+     box-sizing: border-box;
+
+}
+
+.profile-photo-cv img
+{
+
+     width: 100%;
+     height: 100%;
+}
+
+.contact-details
+{
+     font-family: var(--font-pixel);
+     font-size: 18px;
+     display: grid;
+     grid-template-columns: 1fr 1fr;
+     margin-left: 20px;
+     width: fit-content;
+     gap: 20px;
+}
+
+.contact-details p
+{
+     gap: 1px;
+     border-color: hsl(261, 70%, 78%);
+     border-style: solid;
+     border-radius: 20px;
+     padding: 5px;
+     cursor: pointer;
+
+     /* Add transition for smooth hover effect */
+     transition: all 0.3s ease;
+}
+
+/* Hover effect - swap colors */
+.contact-details p:hover
+{
+     background-color: hsl(261, 70%, 78%);
+     color: white;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+.contact-details p a
+{
+     display:block;
+     width: 100%;
+     height: 100%;
+     text-decoration: none;
+     color: inherit; /* Inherit color from parent */
+
+          /* Remove default link padding/margin */
+          margin: 0;
+          padding: 0;
+}
+
+/* Ensure hover works on the link too */
+.contact-details p:hover a
+{
+     color: white;
+}
+
+
+/*     FOR SPLASH SCREEN
 
 #enter-container
 {
@@ -461,7 +529,7 @@ body
      margin: 10px auto;
      width: 80%;
      padding-bottom: 10%;
-}
+} */
 
 
 /* 
