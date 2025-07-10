@@ -8,6 +8,9 @@
      --hue-main: 220; /* blue-ish, but you can try 0 for red, 200 for teal, etc. */
      --clr-nav: hsl(var(--hue-main), 10%, 95%); /* very light, almost white */
      --clr-body: hsl(var(--hue-main), 10%, 95%); /* very light, almost white */
+
+     /* Nav menu font sizing automatic */
+     --nav-font-size: clamp(16px, 3vw, 22px);
 }
 
 body
@@ -23,7 +26,8 @@ body
      /* STYLE */
      background-color: rgb(217, 187, 255);
      list-style: none;
-
+     overflow-wrap: anywhere;
+     overflow:auto;
      
      /* POSITION */
      position: fixed;
@@ -46,13 +50,72 @@ body
      padding-top: 15px;
 
      /* TEXT */
-     font-family: var(--font-regular);
-     font-size: auto;
-     text-align: center;
+     text-wrap:unset;
+     font-family: var(--font-pixel);
+     font-size: var(--nav-font-size);
+     text-align: left;
+     margin-left: 15px;
+}
+/* ──────────────────────────────────────────────
+   For INDEX.HTML (style.css)
+   This section contains styles specific to the
+   index.html file.
+   ────────────────────────────────────────────── */
+.code-effect-display
+{
+     font-family: var(--font-pixel);
+     /* LAYOUT OF INTERNAL ITEMS */
+     display: grid;
+     grid-template-columns: 1fr;
+     width: 80%;
+
+     /* POSITION */
+     position: relative;
+     margin-top: 100px;
+     margin-left: 10%;
+
+     background-color:hsl(261, 70%, 78%);
+     overflow: hidden;
+
+     border-radius: 30px;
+
+     gap: 20px;
+
+     place-items: center;
 }
 
+.general-container
+{
+     display: grid;
+     grid-template-columns: 1fr;
+     width: 50%;
+
+     /* AREA POSITION */
+     margin-top: 30px;
+     width: 90%;
+
+     /* CONTENT POSITION */
+     padding: 0 0 0 20px;
+
+     /* MAKE TEXT STNAD OUT WITH DIFFERENT BG COLOR */
+     background-color: white;
+     border-radius: 30px;
+
+     font-size: 24px;
+
+}
+
+.general-container h2
+{
+     margin-top: 10px;
+     font-family:var(--font-pixel-h2);
+     font-size: 100px;
+}
+
+
+
 /* ──────────────────────────────────────────────
-   MARKUP: PORTFOLIO GALLERY SECTION (style.css)
+   PORTFOLIO GALLERY SECTION (style.css)
    This section contains styles specific to the
    portfolio-gallery.html file.
    ────────────────────────────────────────────── */
@@ -60,18 +123,18 @@ body
 -- visible after opening splash screen -- */
 .project-grid
 {
-     display: inline-grid;
+     display: grid;
      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-   
-     /* SPACE BETWEEN CARDS*/
      gap: 20px;
-    
-     /* SIZE */
-     width: 50%;
+     width: 70%;
 
      /* POSITION */
-     margin: 40px auto 0 26%;
-      
+     margin-top: 40px;
+     margin-left: auto;
+     margin-right: auto;
+
+     place-items: center;
+     position: relative;
 }
 
 .project-card
@@ -95,7 +158,7 @@ body
      border-style: solid;
 
      overflow: hidden;
-     margin: 20px auto;
+     /* margin: 20px auto; */
      padding-top: 3px;
      padding-left: 4px;
      padding-right: 4px;
@@ -123,19 +186,20 @@ body
    │                                                         │
    └─────────────────────────────────────────────────────────┘
 */
+/*
 .open-enter
 {
-      /*GRID*/ 
+      /*GRID*
      display: grid;
      grid-template-columns: 1fr;
 
-      /* BORDER  */
+      /* BORDER*
      border-radius: 6px;
      margin: 10px auto;
      width: 80%;
      padding-bottom: 10%;
 
-      /* POSITION  */
+      /* POSITION*  
      position: absolute;
      top: 50%;
      bottom: 50%;
@@ -143,13 +207,14 @@ body
      right: 50%;
      transform: translate(-50%, -50%);
      
-     /* TEXT */
+     /* TEXT*
      font-size: 8rem;
     
-     /* INTERACT  */
+     /* INTERACT*  
      cursor: pointer;
 
 }
+*/
      
 /*
    ┌─────────────────────────────────────────────────────────┐
@@ -353,8 +418,17 @@ body
 .general-information
 {
      width: fit-content;
-     margin-left: 5%;
      background-color:hsl(261, 70%, 78%);
+
+     border-radius: 5px;
+
+     /* TEXT POSITION AND STYLE */
+     font-family: var(--font-pixel);
+     font-size: var(--font-pixel-h2);
+     padding: 10px;
+
+     margin-top: 10px;
+     margin-left: 70px;
 }
 
 .h2-general
@@ -366,20 +440,6 @@ body
      margin-bottom: 0px;
      margin-left: 60px;
 
-}
-
-.general-information 
-{
-
-border-radius: 5px;
-
-/* TEXT POSITION AND STYLE */
-font-family: var(--font-pixel);
-font-size: var(--font-pixel-h2);
-padding: 10px;
-
-margin-top: 10px;
-margin-left: 70px;
 }
 
 /* 

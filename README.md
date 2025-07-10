@@ -1,39 +1,55 @@
-#TestPortfolio
-I want to use the design principles below for my portfolio site.
+## Plan for Creating Your HTML/CSS CV Page
 
-# CSS
-- grid
-- I want to redesign the site to eventually have the nav-menu stuck to the side of the screen as you scroll down.
+### **Phase 1: Content Structure Planning**
+1. **Define CV Sections** (following standard CV structure):
+   - Header with photo and contact info
+   - Professional summary
+   - Skills section
+   - Work experience
+   - Education
+   - Projects (can reference your existing projects)
+   - Optional: Certifications, Languages, etc.
 
-# HTML
-- Simple structure.
-- Build upon.
+2. **Photo Integration**:
+   - Use your existing profile photo from `images/about/dan-isaksson-profile-image.jpg`
+   - Create a professional header layout
 
+### **Phase 2: HTML Structure Development**
+1. **Create semantic HTML structure** using:
+   - `<section>` for each CV section
+   - `<article>` for individual experiences/projects
+   - `<dl>` (definition lists) for skills
+   - `<time>` elements for dates
 
-#EXTRAS
-- If I get the time, I want to add a simple splash-page.
+2. **Maintain consistency** with your existing navigation and footer structure
 
----
-## Ideas for Tomorrow (HTML/CSS Only)
+### **Phase 3: CSS Layout Implementation**
+1. **Leverage your existing CSS system**:
+   - Use your CSS custom properties (`--font-regular`, `--font-pixel`, etc.)
+   - Follow your established color scheme (`--hue-main`, etc.)
+   - Maintain the design consistency with your other pages
 
-### Landing Page (`landing-page.html`)
-The goal is to create a simple, striking entry point without using JavaScript.
+2. **Create CV-specific layouts**:
+   - **Grid-based layout** for the main CV structure
+   - **Flexbox** for individual section layouts
+   - **Responsive design** using your existing `clamp()` approach
 
--   **Big, Bold Title:** A large, centered title with your name. You could use the `Pixelify Sans` font to make it stand out.
--   **Catchy Subtitle:** A short phrase under your name like "Aspiring Developer," "Creative Coder," or "Building for the Web."
--   **A Clear "Enter" Button:** A prominent, styled button or link that takes the user to your `portfolio-gallery.html`. You can make it interactive with CSS `:hover` effects (like changing color or growing slightly).
--   **Simple CSS Animation:** You could make the title and button fade in slowly using CSS animations for a nice, subtle effect.
+### **Phase 4: Styling Enhancement**
+1. **Typography hierarchy**:
+   - Use your existing font variables
+   - Create clear visual hierarchy for headings
+   - Ensure readability for CV content
 
-### About Page (`about.html`)
-This is where you can tell your story.
+2. **Visual elements**:
+   - Professional photo styling
+   - Section dividers
+   - Consistent spacing using your existing patterns
 
--   **Short Bio Section:** A paragraph or two about yourself.
-    -   Who are you?
-    -   What got you interested in programming?
-    -   What are you passionate about learning?
--   **"My Skills" Section:** Since you're learning, you can frame it as "Skills I'm Developing."
-    -   Use a simple `<ul>` list or a grid of `<div>`s to list technologies like HTML, CSS, C#, etc.
--   **Contact Info:**
-    -   Links to your GitHub and LinkedIn profiles (you can reuse the social icons from your footer).
-    -   You can write out your email address (but avoid making it a `mailto:` link to reduce spam).
--   **A Personal Picture:** Maybe add a small, friendly photo of yourself, perhaps with a styled border that matches your site's aesthetic.
+### **Phase 5: Content Integration**
+1. **Extract information** from your PDF CV
+2. **Adapt content** for web presentation
+3. **Link to existing projects** from your projects page
+
+Would you like me to start with **Phase 1** and help you outline the content structure first? Or would you prefer to jump into **Phase 2** and start building the HTML structure right away?
+
+Also, I noticed your PDF CV is in the project folder - would you like me to help you extract the key information from it to use in the HTML version?
