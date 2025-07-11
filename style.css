@@ -2,61 +2,145 @@
 :root {
      --font-regular: "Alegreya Sans", sans-serif;
      --font-pixel: 'Pixelify Sans', display;
-     --font-pixel-h2: 24px;
-     --font-pixel-h3: 20px;
- 
+    
+     /* RESPONSIVE TYPOGRAPH SCALE */
+     --step--1: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);      /* ~14-16px */
+     --step-0: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);         /* ~16-18px */
+     --step-1: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);     /* ~18-22px */
+     --step-2: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);       /* ~20-24px */
+     --step-3: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);         /* ~24-30px */
+     --step-4: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);     /* ~30-40px */
+     --step-5: clamp(2.5rem, 2.1rem + 2vw, 3.75rem);          /* ~40-60px */
+     --step-6: clamp(3.75rem, 3rem + 3.75vw, 6.25rem);        /* ~60-100px */
+
+     /* RESPONSIVE SPACING */
+     --space-0: 0;
+     --space-1: clamp(0.25rem, 0.2rem + 0.25vw, 0.375rem);    /* ~4-6px */
+     --space-2: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);       /* ~8-12px */
+     --space-3: clamp(0.75rem, 0.6rem + 0.75vw, 1.125rem);    /* ~12-18px */
+     --space-4: clamp(1rem, 0.8rem + 1vw, 1.5rem);            /* ~16-24px */
+     --space-5: clamp(1.25rem, 1rem + 1.25vw, 1.875rem);      /* ~20-30px */
+     --space-6: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);       /* ~24-36px */
+     --space-7: clamp(2rem, 1.6rem + 2vw, 3rem);              /* ~32-48px */
+     --space-8: clamp(2.5rem, 2rem + 2.5vw, 3.75rem);         /* ~40-60px */
+     --space-9: clamp(3rem, 2.4rem + 3vw, 4.5rem);            /* ~48-72px */
+     --space-10: clamp(4rem, 3.2rem + 4vw, 6rem);             /* ~64-96px */
+
+     /* COMMON SPACING COMBINATIONS */
+     --content-padding: var(--space-2);     /* Standard content padding */
+     --section-gap: var(--space-8);         /* Gap between major sections */
+     --element-gap: var(--space-3);         /* Gap between related elements */
+     --micro-gap: var(--space-1);           /* Tiny adjustments */
+
+     /*  FONT COMBINATIONS */
+     --font-body: var(--step-0) var(--font-regular);
+     --font-pixel-small: var(--step-1) var(--font-pixel);
+     --font-pixel-small: var(--step-1) var(--font-pixel);
+     --font-pixel-medium: var(--step-2) var(--font-pixel);
+     --font-pixel-large: var(--step-3) var(--font-pixel);
+     --font-pixel-hero: var(--step-6) var(--font-pixel);
+
      /* Main Colors & Hues*/
      --hue-main: 220; /* blue-ish, but you can try 0 for red, 200 for teal, etc. */
      --clr-nav: hsl(var(--hue-main), 10%, 95%); /* very light, almost white */
-     --clr-body: hsl(var(--hue-main), 10%, 95%); /* very light, almost white */
+     --clr-body: white; /* very light, almost white */
 
      /* Nav menu font sizing automatic */
      --nav-font-size: clamp(16px, 3vw, 22px);
+
+     /* MARGINS */
+     --content-margin-left: var(--space-0);
+}
+/* 
+   ┌─────────────────────────────────────────────────────────┐
+   │                   STANDARD PAGE LAYOUT                  │
+   │   (Main layout, grid, and foundational structure rules) │
+   └─────────────────────────────────────────────────────────┘
+*/
+
+.page-layout {
+     display: grid;
+     grid-template-columns: 12rem 1fr;    /* Fixed sidebar + flexible content */
+     min-height: 100vh;
+     gap: var(--space-5);
+}
+
+/* NEW: Sidebar styling */
+.sidebar {
+     background-color: rgb(217, 187, 255);
+     padding: var(--space-2);
+     border-radius: 15px;
+     margin: var(--space-4);
+     
+     display: grid;
+     grid-template-rows: auto 1fr;         /* Profile photo + nav menu */
+     gap: var(--space-4);
+     
+     position: sticky;                     /* Keeps sidebar visible while scrolling */
+     top: var(--space-4);
+     height: fit-content;
+     max-height: calc(100vh - 2 * var(--space-4));
 }
 
 body
 {
-     background-color: --clr-body;
+     background-color: var(--clr-body);
 }
 
-.nav-menu
+.visually-hidden
 {
-     display: grid;
-     grid-template-columns: 1fr;
-    
-     /* STYLE */
-     background-color: rgb(217, 187, 255);
+     position: absolute;
+     width: 1px;
+     height: 1px;
+     padding: 0;
+     margin: -1px;
+     overflow: hidden;
+     clip: rect(0, 0, 0, 0);
+     white-space: nowrap;
+     border: 0;
+}
+
+/* UPDATED: Nav menu (no longer fixed) */
+.nav-menu {
+     background: none;                     /* Remove background (sidebar has it) */
      list-style: none;
-     overflow-wrap: anywhere;
-     overflow:auto;
+     margin: 0;
+     padding: 0;
      
-     /* POSITION */
-     position: fixed;
-     top: 65px;
-     left: 15px;
-
-     /* BORDER & SIZE */
-     border-radius: 15px;
-     width: 8%;
-     height: 30%;
-     padding: 2px;
-     margin: 2px;
+     /* Remove all the fixed positioning styles */
 }
 
-.nav-menu li
-{
+.nav-menu ul {
+     list-style: none;
+     margin: 0;
+     padding: 0;
+}
+
+.nav-menu li {
      border-bottom-style: solid;
-     border-color:rgb(196, 164, 255);
-     font-size: inherit; /* or e.g. 1rem */     /* POSITION */
-     padding-top: 15px;
+     border-color: rgb(196, 164, 255);
+     
+     /* SPACING - USING NEW SCALE */
+     padding: var(--space-1);
+     margin-left: var(--space-0);        /* ← Remove fixed margin */
 
      /* TEXT */
-     text-wrap:unset;
+     text-wrap: nowrap;                         /* ← Prevent text wrapping */
+     overflow: hidden;                          /* ← Clip overflowing text */
+
      font-family: var(--font-pixel);
      font-size: var(--nav-font-size);
      text-align: left;
-     margin-left: 15px;
 }
+
+/* UPDATED: Main content area */
+.main-content {
+     padding: var(--space-4);
+     overflow-x: hidden;      
+     --content-margin-left: var(--space-0);             /* Prevent horizontal overflow */
+}
+
+
 /* ──────────────────────────────────────────────
    For INDEX.HTML (style.css)
    This section contains styles specific to the
@@ -72,17 +156,18 @@ body
 
      /* POSITION */
      position: relative;
-     margin-top: 100px;
-     margin-left: 10%;
+     margin-top: var(--space-0);
+     padding-bottom: var(--space-8);
 
      background-color:hsl(261, 70%, 78%);
      overflow: hidden;
 
-     border-radius: 30px;
+     border-radius: 20px;
 
-     gap: 20px;
+     gap: var(--space-3);
 
      place-items: center;
+
 }
 
 .general-container
@@ -92,27 +177,25 @@ body
      width: 50%;
 
      /* AREA POSITION */
-     margin-top: 30px;
+     margin-top: var(--space-6);
      width: 90%;
 
      /* CONTENT POSITION */
-     padding: 0 0 0 20px;
+     padding: 0 0 0 10px;
 
      /* MAKE TEXT STNAD OUT WITH DIFFERENT BG COLOR */
      background-color: white;
      border-radius: 30px;
 
-     font-size: 24px;
-     font-family: var(--font-pixel);
 
+     font-size: var(--step-2);
+     font-family: var(--font-pixel);
 }
 
 .general-container h2
 {
-     margin-top: 10px;
-     font-family:var(--font-pixel-h2);
-     font-family:var(--font-pixel);
-     font-size: 100px;
+     margin-top: var(--space-3);
+     font: var(--font-pixel-hero);
 }
 
 
@@ -128,12 +211,12 @@ body
 {
      display: grid;
      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-     gap: 20px;
+     gap: var(--space-5);
      width: 70%;
 
      /* POSITION */
-     margin-top: 40px;
-     margin-left: auto;
+     margin-top: var(--space-2);
+     margin-left: var(--space-2);
      margin-right: auto;
 
      place-items: center;
@@ -162,7 +245,7 @@ body
 
      overflow: hidden;
      /* margin: 20px auto; */
-     padding-top: 3px;
+     padding-top: var(--space-1);
      padding-left: 4px;
      padding-right: 4px;
      width: 200px;
@@ -209,51 +292,66 @@ body
      /* LAYOUT OF INTERNAL ITEMS */
      display: grid;
      grid-template-columns: 1fr 4fr;
-     width: 80%;
+     /* width: 80%; */
 
      /* POSITION */
      position: relative;
-     margin-top: 65px;
-     margin-left: 10%;
+     margin-top: var(--space-6);
+     margin-left: var(--space-0);
 
 }
 
 .left-profilebox
 {
      font-family: var(--font-pixel);
-     font-size: 30px;
+     font-size: var(--step-3);
      color: black;
      width: 90%;
      height: 100%;
      align-items: center;
 }
 
-.profile-photo
-{
-     aspect-ratio:1/1;
+.profile-photo,
+.profile-photo-cv {
+     aspect-ratio: 1/1;
      overflow: hidden;
-     /* FRAME STYLING */
-     border-radius: 30%;
+     
+     /* RESPONSIVE SIZING */
+     max-width: clamp(8rem, 20vw, 15rem);     /* ~128px to 240px */
+     width: 100%;
+     
+     /* RESPONSIVE BORDER */
      border-style: solid;
-     border-width: 10px;
+     border-width: clamp(0.25rem, 1vw, 0.75rem);  /* ~4px to 12px */
      border-color: hsl(261, 70%, 78%);
+     border-radius: 30%;
+     
      box-sizing: border-box;
-
 }
 
-.profile-photo img
-{
+.profile-photo img,
+.profile-photo-cv img {
      width: 100%;
      height: 100%;
+     object-fit: cover;    /* ← Add this for better image scaling */
 }
-
 
 /* TEXT BELOW PROFILE IMAGE */
 .short-about
 {
-     margin-top: 20px;
+     margin-top: var(--space-5);
      border-top-style: solid;
      border-top-color: hsl(261, 70%, 78%);
+}
+
+.short-about h2
+{
+     font: var(--font-pixel-large);
+}
+
+.short-about p
+{
+     font: var(--font-pixel-small);
 }
 
 /* 
@@ -278,7 +376,7 @@ body
      grid-template-columns: 1fr;
      align-items: start;
      width: 35%;
-     margin-left: 50px;
+     margin-left: inherit;
 
      height: fit-content;
      width: fit-content;
@@ -287,11 +385,11 @@ body
 .my-name
 {
      font-family: var(--font-pixel);
-     font-size: 30px;
+     font-size: var(--step-3);
 
      /* REMOVES DEFAULT MARGINS */
      margin-top: 0;
-     margin-bottom: 5px;
+     margin-bottom: var(--space-2);
      padding-bottom: 0px;
 }
 
@@ -307,12 +405,12 @@ body
 .skill-item
 {
      background-color: hsl(261, 70%, 78%);
-     margin: 2px;
-     padding: 2px;
+     margin: var(--space-1);
+     padding: var(--space-1);
      border-radius: 10%;
      text-align: center;
      font-family: var(--font-pixel);
-     font-size: 18px;
+     font-size: var(--step-1);
 }
 
 /* 
@@ -326,13 +424,12 @@ body
 */
 .right-profilebox-main
 {
-     margin-top: 5%;
+     margin-top: var(--space-2);
      
      display: grid;
      grid-template-columns: 1fr;
-     align-items: start;
      height: fit-content;
-     width: fit-content;
+     width:max-content;
 }
 
 .activity-overview
@@ -340,32 +437,34 @@ body
      /* display: grid;
      grid-template-columns: 1fr; */
      width: fit-content;
-     margin-left: 50px;
+     margin-left: var(--space-0);
 }
 
 #current-activity
 {
-     background-color:hsl(261, 70%, 78%);
-     border-radius: 5px;
+     background-color: white;                    /* ← White background like index */
+     border: 5px solid hsl(261, 70%, 78%);     /* ← Purple border instead of background */
+     border-radius: 10px; 
      
      /* TEXT POSITION AND STYLE */
      font-family: var(--font-pixel);
-     font-size: var(--font-pixel-h2);
-     padding: 10px;
+     font-size: var(--font-pixel-large);
+     padding: var(--content-padding);
 
-     margin-top: 10px;
-     margin-left: 10px;
+     margin-top: var(--space-3);
+     margin-left: var(--space-3);
 }
 
 .earlier-work
 {
      /* FONT */
-     font-family: var(--font-pixel);
+     font: var(--font-pixel-small);
 
      display: grid;
      grid-template-columns: 1fr 1fr 1fr;
      gap: 5px;
-     margin-top: 10px;
+     margin-top: var(--space-3);
+     padding-left: var(--space-0);
 }
 
 .earlier-work li
@@ -373,47 +472,69 @@ body
      background-color:hsl(261, 70%, 78%);
      border-radius: 5px;
      padding-left: 10px;
-     padding-top: 5px;
-     padding-bottom: 5px;
+     padding-top: var(--space-2);
+     padding-bottom: var(--space-2);
      list-style: none;
-     margin-left: -25px;
      gap: 10px;
 }
 
 .h2-activity
 {
           /* TEXT POSITION AND STYLE */
-          font-family: var(--font-pixel);
-          font-size: var(--font-pixel-h2);
+          font: var(--font-pixel-large);
           margin-bottom: 0px;
           margin-left: 15px;
 }
 
-.general-information
-{
-     width: fit-content;
-     background-color:hsl(261, 70%, 78%);
-
-     border-radius: 5px;
-
-     /* TEXT POSITION AND STYLE */
-     font-family: var(--font-pixel);
-     font-size: var(--font-pixel-h2);
-     padding: 10px;
-
-     margin-top: 10px;
-     margin-left: 70px;
-}
-
 .h2-general
 {
-     padding: 10px;
+     /* padding: var(--content-padding); */
+
+     /* TEXT POSITION AND STYLE */
+     font: var(--font-pixel-large);
+     margin-bottom: 0px;
+
+}
+
+.general-information
+{
+     background-color: white;                    /* ← White background */
+     border: 5px solid hsl(261, 70%, 78%);     /* ← Purple border */
+     border-radius: 20px;                       /* ← Consistent border radius */
+     
+     width: fit-content;
+
      /* TEXT POSITION AND STYLE */
      font-family: var(--font-pixel);
      font-size: var(--font-pixel-h2);
-     margin-bottom: 0px;
-     margin-left: 60px;
+     padding: var(--content-padding);
 
+     margin-top: var(--space-3);
+     margin-left: var(--space-2);
+}
+.h2-activity
+{
+     padding-left: var(--space-0);
+     margin-left: var(--content-margin-left);
+}
+
+
+.general-information,
+#current-activity
+{
+     margin-left: var(--content-margin-left);
+     padding-left: var(--space-2);
+}
+
+.h2-activity h2
+{
+     padding-left: var(--space-0);
+}
+
+.h2-general h2
+{
+     padding-left: var(--space-0);
+     margin-left: var(--space-0);
 }
 
 /* 
@@ -424,35 +545,19 @@ body
 .cv-header
 {
      display: grid;
-     grid-template-columns: 1fr 4fr;
+     grid-template-columns: 1fr;              /* ← Simplified, no profile photo column */
 
      position: relative;
-
-     margin-left: 10%;
-     margin-top: 65px;
+     margin-left: var(--space-0);             /* ← Remove 10% margin */
+     margin-top: var(--space-2); 
 }
 
-.cv-header h1
-{
-     font-family: var(--font-pixel);
-     margin-left: 40px;
-     border-style: solid;
-     width: fit-content;
-     border-radius: 10px;
-     border-color: hsl(261, 70%, 78%);
-     padding: 5px;
-}
 
-.cv-header p
-{
-     margin-left: 20px;
-}
-
-.profile-photo-cv
+/* .profile-photo-cv
 {
      aspect-ratio:1/1;
      overflow: hidden;
-     /* FRAME STYLING */
+     /* FRAME STYLING 
      border-radius: 30%;
      border-style: solid;
      border-width: 10px;
@@ -466,16 +571,25 @@ body
 
      width: 100%;
      height: 100%;
+} */
+
+.cv-contact-info
+{
+     font-family: var(--font-pixel);
+     font-size: var(--step-2);
+     width: fit-content;
+     gap: var(--space-5);
 }
 
 .contact-details
 {
      font-family: var(--font-pixel);
-     font-size: 24px;
+     font-size: var(--step-2);
      display: grid;
      grid-template-columns: 1fr 1fr;
      width: fit-content;
-     gap: 20px;
+     gap: var(--space-5);
+     padding: 0;
 }
 
 .contact-details li
@@ -485,7 +599,7 @@ body
      border-style: solid;
      border-radius: 20px;
      padding-left: 5px;
-     padding-top: 5px;
+     padding-right: 5px;
      align-items: center;
      cursor: pointer;
      list-style: none;
@@ -502,7 +616,7 @@ body
      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
 
-.contact-details li
+.contact-details a
 {
      display: block;
      width: 100%;
@@ -515,16 +629,15 @@ body
 {
      display: grid;
      grid-template-columns: 1fr;
-     margin-left: 10%;
+     margin-left: var(--space-2);
      border-radius: 20px;
      width: 100%;
 }
 
 .cv-container h2
 {
-     margin-top: 10px;
-     font-family:var(--font-pixel-h2);
-     font-family:var(--font-pixel);
+     margin-top: var(--space-3);
+     font: var(--font-pixel-medium);
      /* border-width:5px; NOT USING TODAY, BUT THIS IS HOW YOU CHANGE THE LINE THICKNESS*/
 
      padding-left: 3%;
@@ -533,16 +646,15 @@ body
      border-style: solid;
      border-color: hsl(261, 70%, 78%);
      border-radius: 15px;
-     margin-top: 40px;
+     margin-top: var(--space-7);
 
 }
 
 .cv-container h3
 {
-     margin-top: 10px;
-     font-family:var(--font-pixel-h3);
-     font-family:var(--font-pixel);
-
+     margin-top: var(--space-3);
+     font: var(--font-pixel-small);
+     
      /* border-width:5px; NOT USING TODAY, BUT THIS IS HOW YOU CHANGE THE LINE THICKNESS*/
 
      padding-left: 3%;
@@ -577,7 +689,7 @@ body
 .cv-skills
 {
      /* FONT STUFF */
-     font-size: 20px;
+     font-size: var(--step-2);
      /* BORDER FIXES */
      border-style: solid;
      border-color: hsl(261, 70%, 78%);
@@ -591,7 +703,7 @@ body
 .cv-knowledge
 {
      /* FONT STUFF */
-     font-size: 20px;
+     font-size: var(--step-2);
 
      /* BORDER FIXES */
      border-style: solid;
@@ -604,7 +716,7 @@ body
 
 .dev-history
 {
-     margin-top: 20px;
+     margin-top: var(--space-5);
      font-family: var(--font-pixel);
 }
 
@@ -613,7 +725,7 @@ body
      width: 70%;
      border-style: solid;
      border-radius: 2px;
-     padding: 10px;
+     padding: var(--content-padding);
      border-top-width: 0cap;
      border-bottom-width: 0cap;
      border-color: hsl(261, 70%, 78%);
@@ -621,13 +733,13 @@ body
 
 .dev-history-items dt
 {
-     font-size: 22px;
-     margin-bottom: 5px;;
+     font-size: var(--step-2);
+     margin-bottom: var(--space-2);;
 }
 
 .dev-history-items dd
 {
-     font-size: 18px;
+     font-size: var(--step-1);
      margin-bottom: 20px;
      margin-left: 0px;
 }
@@ -660,16 +772,21 @@ footer
      display: grid;
      grid-template-columns: 1fr 1fr;
 
-     width: 90%;
-     margin: 40px auto 0 26%;
+     max-width: 70%;
+     width: 100%;
+     margin: 40px auto 0 var(--space-2);
+     margin-top: var(--space-6);
+     margin-inline: auto;
+     padding-top: var(--space-6);
+     
+     /* VISUAL SEPARATION */
+     border-top: 2px solid hsl(261, 70%, 78%);  
 
 }
 
 .rights-container
 {
      font-family: var(--font-regular);
-
-     left: 10%;
 }
 
 .social-container
@@ -677,17 +794,14 @@ footer
      display: grid;
      grid-template-columns: 1fr 1fr;
      align-items: center;
+     justify-self: end;
 
-     width: 20%;
-     height: 5%;
-
-     right: 10%;
-
-     gap: 40px;
-
+     width: fit-content;
+     gap: var(--space-4); 
 }
 
 .social-link img
 {
-     width: 100%;
+     max-width: 100px;
+     height: auto;
 }
