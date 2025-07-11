@@ -1,58 +1,45 @@
-# Tomorrow's Portfolio Improvement Plan
+---
+description: "A pedagogical tutor that provides Socratic or Structured help for beginner programmers in C#, .NET, and web development."
+alwaysApply: "false"
+mustuseReferenceMaterial: "context7.json"
+---
 
-## Phase 1: Font System Normalization (30-45 minutes)
-1. **Update CSS Variables** in `style.css`:
-   - Replace scattered font sizes with consistent scale
-   - Implement responsive font system using rem units
-   - Add new custom properties for typography hierarchy
+# Improvement for Responsive Mobile Design
+## Responsive Mobile Design Plan (Media Queries)
 
-2. **Apply Consistent Font Scales** across all pages:
-   - Update `index.html` font sizes to use new variables
-   - Normalize `cv.html` typography
-   - Fix `projects.html` and `about.html` font inconsistencies
-   - Ensure proper hierarchy: Hero → Large → Medium → Body → Small
+**Total Estimated Time:** ~4–6 hours (can be split across two work sessions)
 
-## Phase 2: Profile Photo Scaling Fix (15-20 minutes)
-1. **Make Profile Photos Responsive**:
-   - Replace fixed `border-width: 10px` with `clamp()` values
-   - Implement responsive sizing using `max-width` and viewport units
-   - Test scaling behavior across different zoom levels
+| Phase | Task | Est. Time |
+|-------|------|-----------|
+| 1 | Audit current layout on real devices & DevTools, list major break-points that break (e.g. ≤480 px, 481–768 px) | 45 min |
+| 2 | Decide mobile-first breakpoints ¹ and create a `styles/mobile.css` import or section in `style.css` | 30 min |
+| 3 | Refactor base styles so they work on narrow viewports (single-column grid, full-width images, font-scaling already in vars) | 1 h |
+| 4 | Add `@media (min-width:48em)` (≈768 px) rules to progressively enhance sidebar grid (`grid-template-columns:12rem 1fr`), nav layout, and project grid (`repeat(auto-fill,minmax(200px,1fr))`) | 1 h |
+| 5 | Add `@media (min-width:64em)` (≈1024 px) tweaks for large screens (max-width, bigger gaps) | 30 min |
+| 6 | Cross-browser/device testing & Lighthouse mobile audit; iterate | 1 h |
+| 7 | Commit & push; verify on GitHub Pages/Netlify preview | 15 min |
 
-2. **Update Both Profile Photo Variants**:
-   - `.profile-photo` (about.html)
-   - `.profile-photo-cv` (cv.html)
+> ¹ Reference: MDN “Using Media Queries” & CSS-WG Media Queries Level 4 spec.
 
-## Phase 3: General Scaling Improvements (20-30 minutes)
-1. **Review Fixed Pixel Values**:
-   - Convert remaining fixed widths to responsive units where appropriate
-   - Update project card dimensions to scale properly
-   - Ensure consistent spacing across all breakpoints
+### Key Best-Practice Notes
+* **Mobile-First:** Define mobile styles as default, then layer `min-width` queries.
+* **Use `em`/`rem` Breakpoints:** Keeps breakpoints tied to font-size, improving accessibility.
+* **Avoid Fixed Heights/Widths:** Replace with `%`, `auto`, or `minmax()`.
+* **Test Real Devices:** Emulators can miss touch/viewport quirks.
+* **Performance:** Combine media-query blocks to reduce duplicate code.
 
-2. **Test Responsive Behavior**:
-   - Verify all elements scale together when zooming
-   - Check consistency across different viewport sizes
-   - Test navigation menu responsiveness
+### Suggested Starting Snippet
+```css
+/* Base (mobile-first) */
+.page-layout { grid-template-columns: 1fr; }
+.sidebar { position:static; width:100%; margin:0; }
 
-## Phase 4: Quick Wins & Polish (15-20 minutes)
-1. **Contact Details Consistency**:
-   - Fix HTML structure mismatch between `<ul>` and `<a>` tags in cv.html
-   - Ensure hover effects work properly across all contact links
+/* ≥48em (~768 px) – tablets & up */
+@media (min-width:48em) {
+  .page-layout { grid-template-columns: 12rem 1fr; }
+  .sidebar { position:sticky; width:auto; margin:var(--space-4); }
+}
+```
 
-2. **Final Testing**:
-   - Quick review of all 4 pages for visual consistency
-   - Test zoom behavior on each page
-   - Verify font hierarchy is clear and readable
-
-## Expected Outcome
-- **Consistent typography** system across all pages
-- **Responsive profile photos** that scale with zoom
-- **Professional visual hierarchy** with clear content organization
-- **Improved user experience** with better scaling behavior
-
-## Files to Modify
-- `style.css` (main changes)
-- `cv.html` (minor HTML structure fix)
-- Quick verification of `index.html`, `projects.html`, `about.html`
-
-**Total estimated time: 1.5-2 hours**
-**Priority: High (affects overall site quality and user experience)**
+---
+_Added by BeginnerCodingTutor — see context7.json for study resources on responsive design._
