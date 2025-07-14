@@ -26,9 +26,6 @@
      --space-9: clamp(3rem, 2.4rem + 3vw, 4.5rem);            /* ~48-72px */
      --space-10: clamp(4rem, 3.2rem + 4vw, 6rem);             /* ~64-96px */
 
-     /* MAXIMUM PAGE WIDTH */      
-     --page-width-max: 120rem;
-
      /* COMMON SPACING COMBINATIONS */
      --content-padding: var(--space-2);     /* Standard content padding */
      --section-gap: var(--space-8);         /* Gap between major sections */
@@ -53,8 +50,6 @@
 
      /* MARGINS */
      --content-margin-left: var(--space-0);
-
-
 }
 /* 
    ┌─────────────────────────────────────────────────────────┐
@@ -63,7 +58,35 @@
    └─────────────────────────────────────────────────────────┘
 */
 
-/* TOOLS FOR APPLYING ON BLOCKS */
+.page-layout {
+     display: grid;
+     grid-template-columns: 12rem 1fr;    /* Fixed sidebar + flexible content */
+     min-height: 100vh;
+     gap: var(--space-5);
+}
+
+/* NEW: Sidebar styling */
+.sidebar {
+     background-color: rgb(217, 187, 255);
+     padding: var(--space-2);
+     border-radius: 15px;
+     margin: var(--space-4);
+     
+     display: grid;
+     grid-template-rows: auto 1fr;         /* Profile photo + nav menu */
+     gap: var(--space-4);
+     
+     position: sticky;                     /* Keeps sidebar visible while scrolling */
+     top: var(--space-4);
+     height: fit-content;
+     max-height: calc(100vh - 2 * var(--space-4));
+}
+
+body
+{
+     background-color: var(--clr-body);
+}
+
 .visually-hidden
 {
      position: absolute;
@@ -77,69 +100,9 @@
      border: 0;
 }
 
-/* BASIC PAGE DESIGN - 1 GRID COLUMN */
-
-.page-layout
-{
-     display: grid;
-     grid-template-columns: 1fr;    /* Removed "12rem" to make our page 1 column default so the navmenu is on top by default. Will add @media for larger screens where we will shift to two columns later */
-     min-height: 100vh;
-     gap: var(--space-5);
-     max-width: var(--page-width-max);
-}
-
-body
-{
-     background-color: var(--clr-body);
-}
-
-/* NAVIGATION MENU BASIC (MOBILE) STYLING WITH PHOTO*/
-
-.profile-photo,
-.profile-photo-cv 
-{
-     aspect-ratio: 1/1;
-     overflow: hidden;
-     
-     /* RESPONSIVE SIZING */
-     max-width: clamp(8rem, 20vw, 15rem);     /* ~128px to 240px */
-     width: 100%;
-     
-     /* RESPONSIVE BORDER */
-     border-style: solid;
-     border-width: clamp(0.25rem, 1vw, 0.75rem);  /* ~4px to 12px */
-     border-color: hsl(261, 70%, 78%);
-     border-radius: 30%;
-     
-     box-sizing: border-box;
-}
-
-.profile-photo img,
-.profile-photo-cv img 
-{
-     width: 100%;
-     height: 100%;
-     object-fit: cover;    /* ← Add this for better image scaling */
-}
-
-
-.nav-container 
-{
-     background-color: rgb(217, 187, 255);
-     padding: var(--space-2);
-     border-radius: 15px;
-     margin: var(--space-4);
-     
-     display: grid;
-     grid-template-columns: 1fr 1fr;         /* Profile photo + nav menu */
-     gap: var(--space-4);
-
-}
-
 /* UPDATED: Nav menu (no longer fixed) */
-.nav-menu 
-{
-     background: none;                     /* Remove background (nav-container has it) */
+.nav-menu {
+     background: none;                     /* Remove background (sidebar has it) */
      list-style: none;
      margin: 0;
      padding: 0;
@@ -147,16 +110,13 @@ body
      /* Remove all the fixed positioning styles */
 }
 
-.nav-menu ul 
-{
+.nav-menu ul {
      list-style: none;
      margin: 0;
-     padding: var(--space-1) var(--space-9) var(--space-1) var(--space-1);
-     /* padding: 0 var(--space-8) 0 0; */
+     padding: 0;
 }
 
-.nav-menu li 
-{
+.nav-menu li {
      border-bottom-style: solid;
      border-color: rgb(196, 164, 255);
      
@@ -173,24 +133,11 @@ body
      text-align: left;
 }
 
-/* 
-   ┌─────────────────────────────────────────────┐
-   │           MAIN CONTENT CONTAINER            │
-   │  This is the starting point for the main    │
-   │  content area.                              │
-   └─────────────────────────────────────────────┘
-*/
-
+/* UPDATED: Main content area */
 .main-content {
      padding: var(--space-4);
-     /* overflow-x: hidden;       */
+     overflow-x: hidden;      
      --content-margin-left: var(--space-0);             /* Prevent horizontal overflow */
-     margin-inline: auto;
-}
-
-main
-{
-     margin-right: 0;
 }
 
 
@@ -205,7 +152,7 @@ main
      /* LAYOUT OF INTERNAL ITEMS */
      display: grid;
      grid-template-columns: 1fr;
-     width: 100%;
+     width: 80%;
 
      /* POSITION */
      position: relative;
@@ -215,7 +162,7 @@ main
      background-color:hsl(261, 70%, 78%);
      overflow: hidden;
 
-     border-radius: 10px;
+     border-radius: 20px;
 
      gap: var(--space-3);
 
@@ -317,6 +264,15 @@ main
      overflow: hidden;
 }
 
+/* ┌─────────────────────────────────────────────────────────┐
+   │                    SPLASH SCREEN                        │
+   │                                                         │
+   │  🚩 TODO: Come back here later to implement            │
+   │     splash screen functionality                         │
+   │                                                         │
+   └─────────────────────────────────────────────────────────┘
+*/
+     
 /*
    ┌─────────────────────────────────────────────────────────┐
    │                                                         │
@@ -355,7 +311,30 @@ main
      align-items: center;
 }
 
+.profile-photo,
+.profile-photo-cv {
+     aspect-ratio: 1/1;
+     overflow: hidden;
+     
+     /* RESPONSIVE SIZING */
+     max-width: clamp(8rem, 20vw, 15rem);     /* ~128px to 240px */
+     width: 100%;
+     
+     /* RESPONSIVE BORDER */
+     border-style: solid;
+     border-width: clamp(0.25rem, 1vw, 0.75rem);  /* ~4px to 12px */
+     border-color: hsl(261, 70%, 78%);
+     border-radius: 30%;
+     
+     box-sizing: border-box;
+}
 
+.profile-photo img,
+.profile-photo-cv img {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;    /* ← Add this for better image scaling */
+}
 
 /* TEXT BELOW PROFILE IMAGE */
 .short-about
@@ -765,6 +744,24 @@ main
      margin-left: 0px;
 }
 
+/*     FOR SPLASH SCREEN
+
+#enter-container
+{
+     display: none;
+     width: 100%;
+     height: 100%;
+}
+
+#click-enter
+{
+     border-radius: 6px;
+     margin: 10px auto;
+     width: 80%;
+     padding-bottom: 10%;
+} */
+
+
 /* 
    ┌─────────────────────────────────────────────────────────┐
    │                     CODE FOR FOOTER                     │
@@ -775,7 +772,7 @@ footer
      display: grid;
      grid-template-columns: 1fr 1fr;
 
-     max-width: var(--page-width-max);
+     max-width: 70%;
      width: 100%;
      margin: 40px auto 0 var(--space-2);
      margin-top: var(--space-6);
@@ -805,71 +802,6 @@ footer
 
 .social-link img
 {
-     max-width: var(--step-6);
+     max-width: 100px;
      height: auto;
 }
-
-/* 
-   ┌─────────────────────────────────────────────────────────┐
-   │                  RESPONSIVE DESIGN RULES                │
-   │      (Media queries for tablet and desktop layouts)     │
-   └─────────────────────────────────────────────────────────┘    */
-
-@media (min-width: 48em)
-{
-/* Two column layout */
-.page-layout
-{
-     grid-template-columns: 12rem 1fr;
-}
-
-.nav-container
-{
-/* Sticky nav-container for wide screens */
-top: var(--space-4);
-height: fit-content;
-max-height: calc(100vh - 2 * var(--space-4));
-display: grid;
-grid-template-columns: 1fr;
-
-background-color: rgb(217, 187, 255);
-padding: var(--space-2);
-border-radius: 15px;
-margin: var(--space-4);
-width: fit-content;
-align-items: center;
-}
-
- .nav-menu ul
-{
-     padding: 0 0 0 0;
-}
-
-.code-effect-display
-{
-     /* LAYOUT OF INTERNAL ITEMS */
-     width: 90%;
-
-     /* POSITION */
-     position: relative;
-     margin-top: var(--space-0);
-     padding-bottom: var(--space-8);
-
-     background-color:hsl(261, 70%, 78%);
-     overflow: hidden;
-
-     border-radius: 20px;
-
-     gap: var(--space-3);
-
-     place-items: center;
-
-}
-
-footer
-{
-     margin-inline: 0; /* Thought it was ugly whent he footer didn't align with the main content. It doesn't span the whole page but... meh?  */
-     width: 100%;
-}
-}
-/* END OF MEDIA QUERY FOR WIDE SCREENS */
