@@ -26,6 +26,9 @@
      --space-9: clamp(3rem, 2.4rem + 3vw, 4.5rem);            /* ~48-72px */
      --space-10: clamp(4rem, 3.2rem + 4vw, 6rem);             /* ~64-96px */
 
+     /* MAXIMUM PAGE WIDTH */      
+     --page-width-max: 120rem;
+
      /* COMMON SPACING COMBINATIONS */
      --content-padding: var(--space-2);     /* Standard content padding */
      --section-gap: var(--space-8);         /* Gap between major sections */
@@ -50,6 +53,8 @@
 
      /* MARGINS */
      --content-margin-left: var(--space-0);
+
+
 }
 /* 
    ┌─────────────────────────────────────────────────────────┐
@@ -74,12 +79,13 @@
 
 /* BASIC PAGE DESIGN - 1 GRID COLUMN */
 
-.page-layout 
+.page-layout
 {
      display: grid;
      grid-template-columns: 1fr;    /* Removed "12rem" to make our page 1 column default so the navmenu is on top by default. Will add @media for larger screens where we will shift to two columns later */
      min-height: 100vh;
      gap: var(--space-5);
+     max-width: var(--page-width-max);
 }
 
 body
@@ -177,8 +183,14 @@ body
 
 .main-content {
      padding: var(--space-4);
-     overflow-x: hidden;      
+     /* overflow-x: hidden;       */
      --content-margin-left: var(--space-0);             /* Prevent horizontal overflow */
+     margin-inline: auto;
+}
+
+main
+{
+     margin-right: 0;
 }
 
 
@@ -193,7 +205,7 @@ body
      /* LAYOUT OF INTERNAL ITEMS */
      display: grid;
      grid-template-columns: 1fr;
-     width: 80%;
+     width: 100%;
 
      /* POSITION */
      position: relative;
@@ -203,7 +215,7 @@ body
      background-color:hsl(261, 70%, 78%);
      overflow: hidden;
 
-     border-radius: 20px;
+     border-radius: 10px;
 
      gap: var(--space-3);
 
@@ -753,24 +765,6 @@ body
      margin-left: 0px;
 }
 
-/*     FOR SPLASH SCREEN
-
-#enter-container
-{
-     display: none;
-     width: 100%;
-     height: 100%;
-}
-
-#click-enter
-{
-     border-radius: 6px;
-     margin: 10px auto;
-     width: 80%;
-     padding-bottom: 10%;
-} */
-
-
 /* 
    ┌─────────────────────────────────────────────────────────┐
    │                     CODE FOR FOOTER                     │
@@ -781,7 +775,7 @@ footer
      display: grid;
      grid-template-columns: 1fr 1fr;
 
-     max-width: 70%;
+     max-width: var(--page-width-max);
      width: 100%;
      margin: 40px auto 0 var(--space-2);
      margin-top: var(--space-6);
@@ -811,7 +805,7 @@ footer
 
 .social-link img
 {
-     max-width: 100px;
+     max-width: var(--step-6);
      height: auto;
 }
 
@@ -850,4 +844,32 @@ align-items: center;
 {
      padding: 0 0 0 0;
 }
-/* } END OF MEDIA QUERY FOR WIDE SCREENS */
+
+.code-effect-display
+{
+     /* LAYOUT OF INTERNAL ITEMS */
+     width: 90%;
+
+     /* POSITION */
+     position: relative;
+     margin-top: var(--space-0);
+     padding-bottom: var(--space-8);
+
+     background-color:hsl(261, 70%, 78%);
+     overflow: hidden;
+
+     border-radius: 20px;
+
+     gap: var(--space-3);
+
+     place-items: center;
+
+}
+
+footer
+{
+     margin-inline: 0; /* Thought it was ugly whent he footer didn't align with the main content. It doesn't span the whole page but... meh?  */
+     width: 100%;
+}
+}
+/* END OF MEDIA QUERY FOR WIDE SCREENS */
