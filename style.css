@@ -58,35 +58,7 @@
    └─────────────────────────────────────────────────────────┘
 */
 
-.page-layout {
-     display: grid;
-     grid-template-columns: 12rem 1fr;    /* Fixed sidebar + flexible content */
-     min-height: 100vh;
-     gap: var(--space-5);
-}
-
-/* NEW: Sidebar styling */
-.sidebar {
-     background-color: rgb(217, 187, 255);
-     padding: var(--space-2);
-     border-radius: 15px;
-     margin: var(--space-4);
-     
-     display: grid;
-     grid-template-rows: auto 1fr;         /* Profile photo + nav menu */
-     gap: var(--space-4);
-     
-     position: sticky;                     /* Keeps sidebar visible while scrolling */
-     top: var(--space-4);
-     height: fit-content;
-     max-height: calc(100vh - 2 * var(--space-4));
-}
-
-body
-{
-     background-color: var(--clr-body);
-}
-
+/* TOOLS FOR APPLYING ON BLOCKS */
 .visually-hidden
 {
      position: absolute;
@@ -100,9 +72,68 @@ body
      border: 0;
 }
 
+/* BASIC PAGE DESIGN - 1 GRID COLUMN */
+
+.page-layout 
+{
+     display: grid;
+     grid-template-columns: 1fr;    /* Removed "12rem" to make our page 1 column default so the navmenu is on top by default. Will add @media for larger screens where we will shift to two columns later */
+     min-height: 100vh;
+     gap: var(--space-5);
+}
+
+body
+{
+     background-color: var(--clr-body);
+}
+
+/* NAVIGATION MENU BASIC (MOBILE) STYLING WITH PHOTO*/
+
+.profile-photo,
+.profile-photo-cv 
+{
+     aspect-ratio: 1/1;
+     overflow: hidden;
+     
+     /* RESPONSIVE SIZING */
+     max-width: clamp(8rem, 20vw, 15rem);     /* ~128px to 240px */
+     width: 100%;
+     
+     /* RESPONSIVE BORDER */
+     border-style: solid;
+     border-width: clamp(0.25rem, 1vw, 0.75rem);  /* ~4px to 12px */
+     border-color: hsl(261, 70%, 78%);
+     border-radius: 30%;
+     
+     box-sizing: border-box;
+}
+
+.profile-photo img,
+.profile-photo-cv img 
+{
+     width: 100%;
+     height: 100%;
+     object-fit: cover;    /* ← Add this for better image scaling */
+}
+
+
+.nav-container 
+{
+     background-color: rgb(217, 187, 255);
+     padding: var(--space-2);
+     border-radius: 15px;
+     margin: var(--space-4);
+     
+     display: grid;
+     grid-template-columns: 1fr 1fr;         /* Profile photo + nav menu */
+     gap: var(--space-4);
+
+}
+
 /* UPDATED: Nav menu (no longer fixed) */
-.nav-menu {
-     background: none;                     /* Remove background (sidebar has it) */
+.nav-menu 
+{
+     background: none;                     /* Remove background (nav-container has it) */
      list-style: none;
      margin: 0;
      padding: 0;
@@ -110,13 +141,16 @@ body
      /* Remove all the fixed positioning styles */
 }
 
-.nav-menu ul {
+.nav-menu ul 
+{
      list-style: none;
      margin: 0;
-     padding: 0;
+     padding: var(--space-1) var(--space-9) var(--space-1) var(--space-1);
+     /* padding: 0 var(--space-8) 0 0; */
 }
 
-.nav-menu li {
+.nav-menu li 
+{
      border-bottom-style: solid;
      border-color: rgb(196, 164, 255);
      
@@ -133,7 +167,14 @@ body
      text-align: left;
 }
 
-/* UPDATED: Main content area */
+/* 
+   ┌─────────────────────────────────────────────┐
+   │           MAIN CONTENT CONTAINER            │
+   │  This is the starting point for the main    │
+   │  content area.                              │
+   └─────────────────────────────────────────────┘
+*/
+
 .main-content {
      padding: var(--space-4);
      overflow-x: hidden;      
@@ -264,15 +305,6 @@ body
      overflow: hidden;
 }
 
-/* ┌─────────────────────────────────────────────────────────┐
-   │                    SPLASH SCREEN                        │
-   │                                                         │
-   │  🚩 TODO: Come back here later to implement            │
-   │     splash screen functionality                         │
-   │                                                         │
-   └─────────────────────────────────────────────────────────┘
-*/
-     
 /*
    ┌─────────────────────────────────────────────────────────┐
    │                                                         │
@@ -311,30 +343,7 @@ body
      align-items: center;
 }
 
-.profile-photo,
-.profile-photo-cv {
-     aspect-ratio: 1/1;
-     overflow: hidden;
-     
-     /* RESPONSIVE SIZING */
-     max-width: clamp(8rem, 20vw, 15rem);     /* ~128px to 240px */
-     width: 100%;
-     
-     /* RESPONSIVE BORDER */
-     border-style: solid;
-     border-width: clamp(0.25rem, 1vw, 0.75rem);  /* ~4px to 12px */
-     border-color: hsl(261, 70%, 78%);
-     border-radius: 30%;
-     
-     box-sizing: border-box;
-}
 
-.profile-photo img,
-.profile-photo-cv img {
-     width: 100%;
-     height: 100%;
-     object-fit: cover;    /* ← Add this for better image scaling */
-}
 
 /* TEXT BELOW PROFILE IMAGE */
 .short-about
@@ -805,3 +814,40 @@ footer
      max-width: 100px;
      height: auto;
 }
+
+/* 
+   ┌─────────────────────────────────────────────────────────┐
+   │                  RESPONSIVE DESIGN RULES                │
+   │      (Media queries for tablet and desktop layouts)     │
+   └─────────────────────────────────────────────────────────┘    */
+
+@media (min-width: 48em)
+{
+/* Two column layout */
+.page-layout
+{
+     grid-template-columns: 12rem 1fr;
+}
+
+.nav-container
+{
+/* Sticky nav-container for wide screens */
+top: var(--space-4);
+height: fit-content;
+max-height: calc(100vh - 2 * var(--space-4));
+display: grid;
+grid-template-columns: 1fr;
+
+background-color: rgb(217, 187, 255);
+padding: var(--space-2);
+border-radius: 15px;
+margin: var(--space-4);
+width: fit-content;
+align-items: center;
+}
+
+ .nav-menu ul
+{
+     padding: 0 0 0 0;
+}
+/* } END OF MEDIA QUERY FOR WIDE SCREENS */
